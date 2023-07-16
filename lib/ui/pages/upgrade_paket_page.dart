@@ -26,6 +26,7 @@ class UpgradePaketPage extends StatelessWidget {
               color: whiteColor,
             ),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   'Perlu Koneksi yang Lebih Cepat? Tingkatkan Sekarang Layanan Anda',
@@ -40,49 +41,54 @@ class UpgradePaketPage extends StatelessWidget {
                     fontSize: 14,
                   ),
                 ),
-                Container(
-                  margin: const EdgeInsets.only(top: 10),
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 30,
-                    vertical: 30,
-                  ),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(14),
-                    color: lightGreenColor,
-                  ),
-                  child: Column(
-                    children: [
-                      PaketItem(
-                        namaPaket: 'Lite',
-                        kecepatan: '25 Down & 10 Mbps Up',
-                        harga: 'Rp.249.000,-/BULAN',
-                        onPressed: () {
-                          Navigator.pushNamed(context, '/detail-upgrade-paket');
-                        },
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      PaketItem(
-                        namaPaket: 'Smart',
-                        kecepatan: '50 Down & 20 Mbps Up',
-                        harga: 'Rp.369.000,-/BULAN',
-                        onPressed: () {
-                          Navigator.pushNamed(context, '/detail-upgrade-paket');
-                        },
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      PaketItem(
-                        namaPaket: 'HAPPY',
-                        kecepatan: '100 Down & 30 Mbps Up',
-                        harga: 'Rp.499.000,-/BULAN',
-                        onPressed: () {
-                          Navigator.pushNamed(context, '/detail-upgrade-paket');
-                        },
-                      ),
-                    ],
+                Center(
+                  child: Container(
+                    margin: const EdgeInsets.only(top: 10),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 30,
+                      vertical: 30,
+                    ),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(14),
+                      color: lightGreenColor,
+                    ),
+                    child: Column(
+                      children: [
+                        PaketItem(
+                          namaPaket: 'Lite',
+                          kecepatan: '25 Down & 10 Mbps Up',
+                          harga: 'Rp.249.000,-/BULAN',
+                          onPressed: () {
+                            Navigator.pushNamed(
+                                context, '/detail-upgrade-paket');
+                          },
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        PaketItem(
+                          namaPaket: 'Smart',
+                          kecepatan: '50 Down & 20 Mbps Up',
+                          harga: 'Rp.369.000,-/BULAN',
+                          onPressed: () {
+                            Navigator.pushNamed(
+                                context, '/detail-upgrade-paket');
+                          },
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        PaketItem(
+                          namaPaket: 'HAPPY',
+                          kecepatan: '100 Down & 30 Mbps Up',
+                          harga: 'Rp.499.000,-/BULAN',
+                          onPressed: () {
+                            Navigator.pushNamed(
+                                context, '/detail-upgrade-paket');
+                          },
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 const SizedBox(

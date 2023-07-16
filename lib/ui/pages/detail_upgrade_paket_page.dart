@@ -17,79 +17,83 @@ class _DetailUpgradePaketPageState extends State<DetailUpgradePaketPage> {
       appBar: AppBar(
         title: const Text("Detail Paket"),
       ),
-      body: Container(
-        margin: const EdgeInsets.all(24),
-        width: double.infinity,
-        height: 682,
-        decoration: BoxDecoration(
-          color: lightGreyColor,
-          border: Border.all(
-            width: 1,
-            color: lightGreenColor,
+      body: ListView(
+        children: [
+          Container(
+            margin: const EdgeInsets.all(24),
+            width: double.infinity,
+            height: 682,
+            decoration: BoxDecoration(
+              color: lightGreyColor,
+              border: Border.all(
+                width: 1,
+                color: lightGreenColor,
+              ),
+            ),
+            child: Column(
+              children: [
+                Container(
+                  color: lightGreenColor,
+                  width: double.infinity,
+                  padding: const EdgeInsets.only(
+                    top: 30,
+                    bottom: 50,
+                  ),
+                  child: Column(
+                    children: [
+                      Text(
+                        'LITE',
+                        style: whiteTextStyle.copyWith(
+                          fontSize: 30,
+                          fontWeight: semiBold,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Text(
+                        'Rp.249.000,-/BULAN',
+                        style: whiteTextStyle.copyWith(
+                          fontSize: 30,
+                          fontWeight: semiBold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                buildText('Up To 25 Mbps Download', darkGreyColor),
+                buildText('Up To 10 Mbps Upload', lightGreyColor),
+                buildText('Kontrak Minimal 12 Bulan', darkGreyColor),
+                buildText('Private IP Address', lightGreyColor),
+                buildText('Unlimited Data', darkGreyColor),
+                buildText('SLA : Best Effort', lightGreyColor),
+                buildText('Tanpa FUP', darkGreyColor),
+                const SizedBox(
+                  height: 30,
+                ),
+                CustomFilledButton(
+                  title: 'UPGRADE',
+                  isRounded: false,
+                  width: 190,
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => TerimakasihPage(
+                          ucapan:
+                              'Terimakasih Sudah Berlangganan Kami akan memberitahukan kepada anda secepatnya',
+                          onPressed: () {
+                            Navigator.pushNamed(context, '/home');
+                          },
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ],
+            ),
           ),
-        ),
-        child: Column(
-          children: [
-            Container(
-              color: lightGreenColor,
-              width: double.infinity,
-              padding: const EdgeInsets.only(
-                top: 30,
-                bottom: 50,
-              ),
-              child: Column(
-                children: [
-                  Text(
-                    'LITE',
-                    style: whiteTextStyle.copyWith(
-                      fontSize: 30,
-                      fontWeight: semiBold,
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  Text(
-                    'Rp.249.000,-/BULAN',
-                    style: whiteTextStyle.copyWith(
-                      fontSize: 30,
-                      fontWeight: semiBold,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            buildText('Up To 25 Mbps Download', darkGreyColor),
-            buildText('Up To 10 Mbps Upload', lightGreyColor),
-            buildText('Kontrak Minimal 12 Bulan', darkGreyColor),
-            buildText('Private IP Address', lightGreyColor),
-            buildText('Unlimited Data', darkGreyColor),
-            buildText('SLA : Best Effort', lightGreyColor),
-            buildText('Tanpa FUP', darkGreyColor),
-            const SizedBox(
-              height: 30,
-            ),
-            CustomFilledButton(
-              title: 'UPGRADE',
-              isRounded: false,
-              width: 190,
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => TerimakasihPage(
-                      ucapan:
-                          'Terimakasih Sudah Berlangganan Kami akan memberitahukan kepada anda secepatnya',
-                      onPressed: () {
-                        Navigator.pushNamed(context, '/home');
-                      },
-                    ),
-                  ),
-                );
-              },
-            ),
-          ],
-        ),
+        ],
       ),
     );
   }

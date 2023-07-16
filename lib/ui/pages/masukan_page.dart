@@ -23,14 +23,15 @@ class _MasukanPageState extends State<MasukanPage> {
       ),
       body: Container(
         width: double.infinity,
-        height: 300,
         padding: const EdgeInsets.symmetric(
           horizontal: 24,
           vertical: 10,
         ),
-        margin: const EdgeInsets.symmetric(
-          horizontal: 24,
-          vertical: 5,
+        margin: const EdgeInsets.only(
+          right: 24,
+          left: 24,
+          top: 5,
+          bottom: 30,
         ),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
@@ -69,6 +70,9 @@ class _MasukanPageState extends State<MasukanPage> {
                   ),
                 );
               },
+            ),
+            const SizedBox(
+              height: 25,
             ),
           ],
         ),

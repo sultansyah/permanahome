@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:permanahome/shared/theme.dart';
+import 'package:permanahome/ui/blocs/auth/auth_bloc.dart';
 import 'package:permanahome/ui/pages/detail_notifikasi_page.dart';
 import 'package:permanahome/ui/pages/detail_paket_page.dart';
 import 'package:permanahome/ui/pages/detail_pertanyaan_page.dart';
@@ -40,47 +42,54 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        scaffoldBackgroundColor: lightBackgroundColor,
-        appBarTheme: AppBarTheme(
-          backgroundColor: lightBackgroundColor,
-          elevation: 0,
-          centerTitle: true,
-          iconTheme: IconThemeData(
-            color: blackColor,
-          ),
-          titleTextStyle: blackTextStyle.copyWith(
-            fontSize: 20,
-            fontWeight: semiBold,
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => AuthBloc()..add(AuthGetCurrentUser()),
+        ),
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          scaffoldBackgroundColor: lightBackgroundColor,
+          appBarTheme: AppBarTheme(
+            backgroundColor: lightBackgroundColor,
+            elevation: 0,
+            centerTitle: true,
+            iconTheme: IconThemeData(
+              color: blackColor,
+            ),
+            titleTextStyle: blackTextStyle.copyWith(
+              fontSize: 20,
+              fontWeight: semiBold,
+            ),
           ),
         ),
+        routes: {
+          '/': (context) => const SplashPage(),
+          '/onboarding': (context) => const OnBoardingPage(),
+          '/sign-in': (context) => const SignInPage(),
+          '/sign-up': (context) => const SignUpPage(),
+          '/home': (context) => const SetPage(),
+          '/profile': (context) => const ProfilePage(),
+          '/paket': (context) => const PaketPage(),
+          '/detail-paket': (context) => const DetailPaketPage(),
+          '/detail-upgrade-paket': (context) => const DetailUpgradePaketPage(),
+          '/upgrade-paket': (context) => const UpgradePaketPage(),
+          '/permana-home-number': (context) => const PermanaHomeNumberPage(),
+          '/hubungkan-permana-home-number': (context) =>
+              const HubungkanPermanaHomeNumberPage(),
+          '/riwayat': (context) => const RiwayatPage(),
+          '/detail-riwayat': (context) => const DetailRiwayatPage(),
+          '/detail-notifikasi': (context) => const DetailNotifikasiPage(),
+          '/pertanyaan': (context) => const PertanyaanPage(),
+          '/detail-pertanyaan': (context) => const DetailPertanyaan(),
+          '/laporkan': (context) => const LaporkanPage(),
+          '/masukan': (context) => const MasukanPage(),
+          '/tentang': (context) => const TentangPage(),
+          '/edit-profile': (context) => const EditProfilePage(),
+        },
       ),
-      routes: {
-        '/': (context) => const SplashPage(),
-        '/onboarding': (context) => const OnBoardingPage(),
-        '/sign-in': (context) => const SignInPage(),
-        '/sign-up': (context) => const SignUpPage(),
-        '/home': (context) => const SetPage(),
-        '/profile': (context) => const ProfilePage(),
-        '/paket': (context) => const PaketPage(),
-        '/detail-paket': (context) => const DetailPaketPage(),
-        '/detail-upgrade-paket': (context) => const DetailUpgradePaketPage(),
-        '/upgrade-paket': (context) => const UpgradePaketPage(),
-        '/permana-home-number': (context) => const PermanaHomeNumberPage(),
-        '/hubungkan-permana-home-number': (context) =>
-            const HubungkanPermanaHomeNumberPage(),
-        '/riwayat': (context) => const RiwayatPage(),
-        '/detail-riwayat': (context) => const DetailRiwayatPage(),
-        '/detail-notifikasi': (context) => const DetailNotifikasiPage(),
-        '/pertanyaan': (context) => const PertanyaanPage(),
-        '/detail-pertanyaan': (context) => const DetailPertanyaan(),
-        '/laporkan': (context) => const LaporkanPage(),
-        '/masukan': (context) => const MasukanPage(),
-        '/tentang': (context) => const TentangPage(),
-        '/edit-profile': (context) => const EditProfilePage(),
-      },
     );
   }
 }

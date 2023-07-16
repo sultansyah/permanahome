@@ -1,21 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:permanahome/models/berita_model.dart';
 import 'package:permanahome/shared/theme.dart';
 import 'package:permanahome/ui/pages/berita_page.dart';
 
 class BeritaItem extends StatelessWidget {
-  final String title;
-  final String konten;
-  final String gambar;
-  final String tanggal;
-  final VoidCallback? onPressed;
+  final BeritaModel berita;
 
   const BeritaItem({
     super.key,
-    required this.title,
-    required this.konten,
-    required this.tanggal,
-    required this.gambar,
-    this.onPressed,
+    required this.berita,
   });
 
   @override
@@ -26,26 +19,25 @@ class BeritaItem extends StatelessWidget {
           context,
           MaterialPageRoute(
             builder: (context) => BeritaPage(
-              title: title,
-              konten: konten,
-              tanggal: tanggal,
-              gambar: gambar,
+              berita: berita,
             ),
           ),
         );
       },
-      child: Container(
-        margin: const EdgeInsets.only(
-          top: 14,
-        ),
+      child: SizedBox(
         width: 155,
-        height: 176,
+        height: 170,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Image.asset('assets/img_berita1.png'),
+            Image.network(
+              berita.gambar ?? '',
+              width: 155,
+              height: 110,
+              fit: BoxFit.cover,
+            ),
             Text(
-              title,
+              berita.judul ?? '',
               style: blackTextStyle.copyWith(
                 fontSize: 14,
                 fontWeight: medium,

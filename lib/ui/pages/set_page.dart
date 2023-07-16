@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:permanahome/shared/theme.dart';
+import 'package:permanahome/ui/blocs/auth/auth_bloc.dart';
 import 'package:permanahome/ui/pages/bantuan_page.dart';
 import 'package:permanahome/ui/pages/home_page.dart';
 import 'package:permanahome/ui/pages/notifikasi_page.dart';
@@ -103,15 +105,22 @@ class _SetPageState extends State<SetPage> {
           ],
         ),
       ),
-      body: IndexedStack(
-        index: index,
-        children: const [
-          HomePage(),
-          RiwayatPage(),
-          NotifikasiPage(),
-          BantuanPage(),
-          ProfilePage(),
-        ],
+      body: BlocBuilder<AuthBloc, AuthState>(
+        builder: (context, state) {
+          if (state is AuthSuccess) {
+            return IndexedStack(
+              index: index,
+              children: const [
+                HomePage(),
+                RiwayatPage(),
+                NotifikasiPage(),
+                BantuanPage(),
+                ProfilePage(),
+              ],
+            );
+          }
+          return const LinearProgressIndicator();
+        },
       ),
     );
   }

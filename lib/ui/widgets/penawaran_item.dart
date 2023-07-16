@@ -17,10 +17,7 @@ class PenawaranItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onPressed,
-      child: Container(
-        margin: const EdgeInsets.only(
-          top: 14,
-        ),
+      child: SizedBox(
         width: 118,
         height: 150,
         child: Column(
@@ -28,6 +25,7 @@ class PenawaranItem extends StatelessWidget {
           children: [
             Image.asset(
               gambar,
+              fit: BoxFit.cover,
             ),
             Text(
               title,

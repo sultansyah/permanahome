@@ -1,25 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:permanahome/models/berita_model.dart';
 import 'package:permanahome/shared/theme.dart';
 
 class BeritaPage extends StatelessWidget {
-  final String title;
-  final String konten;
-  final String tanggal;
-  final String gambar;
+  final BeritaModel berita;
 
   const BeritaPage({
     super.key,
-    required this.title,
-    required this.konten,
-    required this.tanggal,
-    required this.gambar,
+    required this.berita,
   });
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(title),
+        title: Text(berita.judul ?? ''),
       ),
       body: ListView(
         padding: const EdgeInsets.symmetric(
@@ -38,7 +33,7 @@ class BeritaPage extends StatelessWidget {
                 ),
               ),
               Text(
-                tanggal,
+                berita.createdAt ?? '',
                 style: blackTextStyle.copyWith(
                   fontSize: 12,
                   fontWeight: medium,
@@ -49,15 +44,17 @@ class BeritaPage extends StatelessWidget {
           const SizedBox(
             height: 4,
           ),
-          Image.asset(
-            gambar,
-            width: 313,
+          Image.network(
+            berita.gambar ?? '',
+            height: 306,
+            width: 184,
+            fit: BoxFit.cover,
           ),
           const SizedBox(
             height: 4,
           ),
           Text(
-            title,
+            berita.judul ?? '',
             style: blackTextStyle.copyWith(
               fontSize: 16,
               fontWeight: semiBold,
@@ -67,10 +64,13 @@ class BeritaPage extends StatelessWidget {
             height: 4,
           ),
           Text(
-            konten,
+            berita.konten ?? '',
             style: blackTextStyle.copyWith(
               fontSize: 14,
             ),
+          ),
+          const SizedBox(
+            height: 30,
           ),
         ],
       ),

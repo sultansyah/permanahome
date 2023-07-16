@@ -56,6 +56,7 @@ class DetailPertanyaan extends StatelessWidget {
             ),
             color: whiteColor,
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(
                   height: 4,

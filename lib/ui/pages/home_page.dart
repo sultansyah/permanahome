@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:permanahome/shared/shareds_method.dart';
 import 'package:permanahome/shared/theme.dart';
+import 'package:permanahome/ui/blocs/auth/auth_bloc.dart';
+import 'package:permanahome/ui/blocs/berita/berita_bloc.dart';
+import 'package:permanahome/ui/blocs/user_permana_home_number/user_permana_home_number_bloc.dart';
 import 'package:permanahome/ui/pages/set_page.dart';
 import 'package:permanahome/ui/widgets/berita_item.dart';
 import 'package:permanahome/ui/widgets/buttons.dart';
@@ -23,15 +28,39 @@ class HomePage extends StatelessWidget {
                   bottom: 20,
                 ),
                 color: lightGreenColor,
-                child: Column(
-                  children: [
-                    buildProfile(context),
-                    const SizedBox(
-                      height: 5,
-                    ),
-                    buildTwoCard(context),
-                    // buildOneCard(context),
-                  ],
+                child: BlocProvider(
+                  create: (context) => UserPermanaHomeNumberBloc()
+                    ..add(UserPermanaHomeNumberGet()),
+                  child: BlocConsumer<UserPermanaHomeNumberBloc,
+                      UserPermanaHomeNumberState>(
+                    listener: (context, state) {
+                      if (state is UserPermanaHomeNumberFailed) {
+                        showCustomSnackbar(context, state.e);
+                      }
+                    },
+                    builder: (context, state) {
+                      if (state is UserPermanaHomeNumberFailed) {
+                        return Column(
+                          children: [
+                            buildProfile(context),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            buildTwoCard(context),
+                          ],
+                        );
+                      }
+                      return Column(
+                        children: [
+                          buildProfile(context),
+                          const SizedBox(
+                            height: 5,
+                          ),
+                          buildOneCard(context),
+                        ],
+                      );
+                    },
+                  ),
                 ),
               ),
               // tambah penawaran terbaru disini
@@ -50,6 +79,9 @@ class HomePage extends StatelessWidget {
                       height: 17,
                     ),
                     buildBerita(),
+                    const SizedBox(
+                      height: 17,
+                    ),
                   ],
                 ),
               ),
@@ -61,44 +93,55 @@ class HomePage extends StatelessWidget {
   }
 
   Widget buildProfile(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'Muhammad Sultansyah',
-              style: blackTextStyle.copyWith(
-                fontSize: 16,
-                fontWeight: semiBold,
+    return BlocBuilder<AuthBloc, AuthState>(
+      builder: (context, state) {
+        if (state is AuthSuccess) {
+          return Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    state.user.fullName ?? '',
+                    style: blackTextStyle.copyWith(
+                      fontSize: 16,
+                      fontWeight: semiBold,
+                    ),
+                  ),
+                ],
               ),
-            ),
-          ],
-        ),
-        GestureDetector(
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const SetPage(
-                  index: 4,
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const SetPage(
+                        index: 4,
+                      ),
+                    ),
+                  );
+                },
+                child: Container(
+                  width: 60,
+                  height: 60,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    image: (state.user.profilePicture == null)
+                        ? const DecorationImage(
+                            image: AssetImage('assets/img_profile.png'),
+                          )
+                        : DecorationImage(
+                            image: NetworkImage(state.user.profilePicture!),
+                          ),
+                  ),
                 ),
               ),
-            );
-          },
-          child: Container(
-            width: 60,
-            height: 60,
-            decoration: const BoxDecoration(
-              shape: BoxShape.circle,
-              image: DecorationImage(
-                image: AssetImage('assets/img_profile.png'),
-              ),
-            ),
-          ),
-        ),
-      ],
+            ],
+          );
+        }
+        return Container();
+      },
     );
   }
 
@@ -315,6 +358,9 @@ class HomePage extends StatelessWidget {
             fontWeight: semiBold,
           ),
         ),
+        const SizedBox(
+          height: 14,
+        ),
         SingleChildScrollView(
           scrollDirection: Axis.horizontal,
           child: Row(
@@ -364,40 +410,33 @@ class HomePage extends StatelessWidget {
             fontWeight: semiBold,
           ),
         ),
-        const SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Row(
-            children: [
-              BeritaItem(
-                title: 'Tingkatkan Tri Dharma Perguruan Tinggi',
-                tanggal: '12 Juni 2023',
-                konten:
-                    'Tingkatkan Tri Dharma Perguruan Tinggi Tingkatkan Tri Dharma Perguruan Tinggi Tingkatkan Tri Dharma Perguruan Tinggi Tingkatkan Tri Dharma Perguruan Tinggi Tingkatkan Tri Dharma Perguruan Tinggi',
-                gambar: 'assets/img_berita2.png',
-              ),
-              SizedBox(
-                width: 14,
-              ),
-              BeritaItem(
-                title:
-                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-                tanggal: '12 Juni 2023',
-                konten:
-                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Diam phasellus vestibulum lorem sed risus. Diam maecenas ultricies mi eget. Nam at lectus urna duis convallis. Malesuada proin libero nunc consequat. Auctor neque vitae tempus quam pellentesque nec nam aliquam sem. Ut lectus arcu bibendum at. Vitae proin sagittis nisl rhoncus mattis rhoncus urna. Vitae congue mauris rhoncus aenean vel elit scelerisque. Ultricies lacus sed turpis tincidunt id aliquet. Nullam ac tortor vitae purus faucibus ornare. Lorem ipsum dolor sit amet consectetur. Consectetur adipiscing elit ut aliquam purus sit amet. Purus ut faucibus pulvinar elementum integer. Nulla at volutpat diam ut venenatis tellus in metus. Id leo in vitae turpis massa sed elementum tempus. Nam aliquam sem et tortor consequat id porta. Enim blandit volutpat maecenas volutpat blandit. Neque vitae tempus quam pellentesque nec nam aliquam sem et. Magna etiam tempor orci eu lobortis elementum. Adipiscing bibendum est ultricies integer quis auctor elit sed vulputate. Mattis molestie a iaculis at erat. Diam sollicitudin tempor id eu nisl nunc mi ipsum. Aliquet eget sit amet tellus cras adipiscing enim eu turpis. Pellentesque massa placerat duis ultricies lacus sed. Odio ut enim blandit volutpat maecenas volutpat blandit aliquam. Nulla malesuada pellentesque elit eget gravida cum sociis. Lectus vestibulum mattis ullamcorper velit sed ullamcorper. Ut diam quam nulla porttitor massa id. Magna etiam tempor orci eu. At elementum eu facilisis sed odio morbi. Neque vitae tempus quam pellentesque. Sed egestas egestas fringilla phasellus faucibus scelerisque eleifend donec. Vestibulum mattis ullamcorper velit sed ullamcorper morbi tincidunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Diam phasellus vestibulum lorem sed risus. Diam maecenas ultricies mi eget. Nam at lectus urna duis convallis. Malesuada proin libero nunc consequat. Auctor neque vitae tempus quam pellentesque nec nam aliquam sem. Ut lectus arcu bibendum at. Vitae proin sagittis nisl rhoncus mattis rhoncus urna. Vitae congue mauris rhoncus aenean vel elit scelerisque. Ultricies lacus sed turpis tincidunt id aliquet. Nullam ac tortor vitae purus faucibus ornare. Lorem ipsum dolor sit amet consectetur. Consectetur adipiscing elit ut aliquam purus sit amet. Purus ut faucibus pulvinar elementum integer. Nulla at volutpat diam ut venenatis tellus in metus. Id leo in vitae turpis massa sed elementum tempus. Nam aliquam sem et tortor consequat id porta. Enim blandit volutpat maecenas volutpat blandit. Neque vitae tempus quam pellentesque nec nam aliquam sem et. Magna etiam tempor orci eu lobortis elementum. Adipiscing bibendum est ultricies integer quis auctor elit sed vulputate. Mattis molestie a iaculis at erat. Diam sollicitudin tempor id eu nisl nunc mi ipsum. Aliquet eget sit amet tellus cras adipiscing enim eu turpis. Pellentesque massa placerat duis ultricies lacus sed. Odio ut enim blandit volutpat maecenas volutpat blandit aliquam. Nulla malesuada pellentesque elit eget gravida cum sociis. Lectus vestibulum mattis ullamcorper velit sed ullamcorper. Ut diam quam nulla porttitor massa id. Magna etiam tempor orci eu. At elementum eu facilisis sed odio morbi. Neque vitae tempus quam pellentesque. Sed egestas egestas fringilla phasellus faucibus scelerisque eleifend donec. Vestibulum mattis ullamcorper velit sed ullamcorper morbi tincidunt.',
-                gambar: 'assets/img_berita2.png',
-              ),
-              SizedBox(
-                width: 14,
-              ),
-              BeritaItem(
-                title:
-                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-                tanggal: '12 Juni 2023',
-                konten:
-                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Diam phasellus vestibulum lorem sed risus. Diam maecenas ultricies mi eget. Nam at lectus urna duis convallis. Malesuada proin libero nunc consequat. Auctor neque vitae tempus quam pellentesque nec nam aliquam sem. Ut lectus arcu bibendum at. Vitae proin sagittis nisl rhoncus mattis rhoncus urna. Vitae congue mauris rhoncus aenean vel elit scelerisque. Ultricies lacus sed turpis tincidunt id aliquet. Nullam ac tortor vitae purus faucibus ornare. Lorem ipsum dolor sit amet consectetur. Consectetur adipiscing elit ut aliquam purus sit amet. Purus ut faucibus pulvinar elementum integer. Nulla at volutpat diam ut venenatis tellus in metus. Id leo in vitae turpis massa sed elementum tempus. Nam aliquam sem et tortor consequat id porta. Enim blandit volutpat maecenas volutpat blandit. Neque vitae tempus quam pellentesque nec nam aliquam sem et. Magna etiam tempor orci eu lobortis elementum. Adipiscing bibendum est ultricies integer quis auctor elit sed vulputate. Mattis molestie a iaculis at erat. Diam sollicitudin tempor id eu nisl nunc mi ipsum. Aliquet eget sit amet tellus cras adipiscing enim eu turpis. Pellentesque massa placerat duis ultricies lacus sed. Odio ut enim blandit volutpat maecenas volutpat blandit aliquam. Nulla malesuada pellentesque elit eget gravida cum sociis. Lectus vestibulum mattis ullamcorper velit sed ullamcorper. Ut diam quam nulla porttitor massa id. Magna etiam tempor orci eu. At elementum eu facilisis sed odio morbi. Neque vitae tempus quam pellentesque. Sed egestas egestas fringilla phasellus faucibus scelerisque eleifend donec. Vestibulum mattis ullamcorper velit sed ullamcorper morbi tincidunt. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Diam phasellus vestibulum lorem sed risus. Diam maecenas ultricies mi eget. Nam at lectus urna duis convallis. Malesuada proin libero nunc consequat. Auctor neque vitae tempus quam pellentesque nec nam aliquam sem. Ut lectus arcu bibendum at. Vitae proin sagittis nisl rhoncus mattis rhoncus urna. Vitae congue mauris rhoncus aenean vel elit scelerisque. Ultricies lacus sed turpis tincidunt id aliquet. Nullam ac tortor vitae purus faucibus ornare. Lorem ipsum dolor sit amet consectetur. Consectetur adipiscing elit ut aliquam purus sit amet. Purus ut faucibus pulvinar elementum integer. Nulla at volutpat diam ut venenatis tellus in metus. Id leo in vitae turpis massa sed elementum tempus. Nam aliquam sem et tortor consequat id porta. Enim blandit volutpat maecenas volutpat blandit. Neque vitae tempus quam pellentesque nec nam aliquam sem et. Magna etiam tempor orci eu lobortis elementum. Adipiscing bibendum est ultricies integer quis auctor elit sed vulputate. Mattis molestie a iaculis at erat. Diam sollicitudin tempor id eu nisl nunc mi ipsum. Aliquet eget sit amet tellus cras adipiscing enim eu turpis. Pellentesque massa placerat duis ultricies lacus sed. Odio ut enim blandit volutpat maecenas volutpat blandit aliquam. Nulla malesuada pellentesque elit eget gravida cum sociis. Lectus vestibulum mattis ullamcorper velit sed ullamcorper. Ut diam quam nulla porttitor massa id. Magna etiam tempor orci eu. At elementum eu facilisis sed odio morbi. Neque vitae tempus quam pellentesque. Sed egestas egestas fringilla phasellus faucibus scelerisque eleifend donec. Vestibulum mattis ullamcorper velit sed ullamcorper morbi tincidunt.',
-                gambar: 'assets/img_berita2.png',
-              ),
-            ],
+        const SizedBox(
+          height: 14,
+        ),
+        BlocProvider(
+          create: (context) => BeritaBloc()..add(BeritaGet()),
+          child: BlocBuilder<BeritaBloc, BeritaState>(
+            builder: (context, state) {
+              if (state is BeritaSuccess) {
+                return SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    children: state.berita
+                        .map(
+                          (e) => Container(
+                            margin: const EdgeInsets.only(right: 10),
+                            child: BeritaItem(berita: e),
+                          ),
+                        )
+                        .toList(),
+                  ),
+                );
+              }
+
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            },
           ),
         ),
       ],
