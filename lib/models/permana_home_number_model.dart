@@ -1,4 +1,4 @@
-import 'package:permanahome/models/paket_layanan_mode.dart';
+import 'package:permanahome/models/paket_layanan_model.dart';
 
 class PermanaHomeNumber {
   final int? id;
