@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:permanahome/models/user_permana_home_number_model.dart';
 import 'package:permanahome/shared/shareds_method.dart';
 import 'package:permanahome/shared/theme.dart';
 import 'package:permanahome/ui/blocs/auth/auth_bloc.dart';
@@ -28,39 +29,40 @@ class HomePage extends StatelessWidget {
                   bottom: 20,
                 ),
                 color: lightGreenColor,
-                child: BlocProvider(
-                  create: (context) => UserPermanaHomeNumberBloc()
-                    ..add(UserPermanaHomeNumberGet()),
-                  child: BlocConsumer<UserPermanaHomeNumberBloc,
-                      UserPermanaHomeNumberState>(
-                    listener: (context, state) {
-                      if (state is UserPermanaHomeNumberFailed) {
-                        showCustomSnackbar(context, state.e);
-                      }
-                    },
-                    builder: (context, state) {
-                      if (state is UserPermanaHomeNumberFailed) {
-                        return Column(
-                          children: [
-                            buildProfile(context),
-                            const SizedBox(
-                              height: 5,
-                            ),
-                            buildTwoCard(context),
-                          ],
-                        );
-                      }
+                child: BlocConsumer<UserPermanaHomeNumberBloc,
+                    UserPermanaHomeNumberState>(
+                  listener: (context, state) {
+                    if (state is UserPermanaHomeNumberFailed) {
+                      showCustomSnackbar(context, state.e);
+                    }
+                  },
+                  builder: (context, state) {
+                    if (state is UserPermanaHomeNumberSuccess) {
                       return Column(
                         children: [
                           buildProfile(context),
                           const SizedBox(
                             height: 5,
                           ),
-                          buildOneCard(context),
+                          buildOneCard(
+                            context,
+                            state.userPermanaHomeNumbers
+                                .firstWhere((element) => element.isActive == 1),
+                          ),
                         ],
                       );
-                    },
-                  ),
+                    }
+
+                    return Column(
+                      children: [
+                        buildProfile(context),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        buildTwoCard(context),
+                      ],
+                    );
+                  },
                 ),
               ),
               // tambah penawaran terbaru disini
@@ -145,7 +147,7 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget buildOneCard(BuildContext context) {
+  Widget buildOneCard(BuildContext context, UserPermanaHomeNumber data) {
     return Container(
       width: 327,
       height: 239,
@@ -175,7 +177,7 @@ class HomePage extends StatelessWidget {
             ),
           ),
           Text(
-            'number',
+            data.permanaHomeNumberId.toString(),
             style: lightGreenTextStyle.copyWith(
               fontSize: 13,
               fontWeight: semiBold,
@@ -192,10 +194,11 @@ class HomePage extends StatelessWidget {
             ),
           ),
           Text(
-            'nama paket',
+            data.permanaHomeNumber!.paketLayanan!.nama.toString(),
             style: lightGreenTextStyle.copyWith(
               fontSize: 13,
               fontWeight: semiBold,
+              letterSpacing: 2,
             ),
           ),
           const SizedBox(

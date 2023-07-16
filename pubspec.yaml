@@ -47,6 +47,7 @@ dependencies:
   google_fonts: ^5.1.0
   flutter_signature_pad: ^3.0.1
   maps_launcher: ^2.2.0
+  bloc: ^8.1.2
   
 
 dev_dependencies:
