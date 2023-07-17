@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:permanahome/shared/shareds_method.dart';
 import 'package:permanahome/shared/theme.dart';
+import 'package:permanahome/ui/blocs/user_permana_home_number/user_permana_home_number_bloc.dart';
 import 'package:permanahome/ui/widgets/buttons.dart';
 import 'package:permanahome/ui/widgets/permana_home_number_item.dart';
 
@@ -8,57 +11,54 @@ class PermanaHomeNumberPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    context.read<UserPermanaHomeNumberBloc>().add(UserPermanaHomeNumberGet());
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Permana Home Number'),
       ),
-      body: ListView(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 24,
-        ),
-        children: [
-          const SizedBox(
-            height: 30,
-          ),
-          Container(
-            padding: const EdgeInsets.only(
-              top: 20,
-              bottom: 20,
-            ),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(14),
-              color: lightGreenColor,
-            ),
-            child: Column(
+      body: BlocConsumer<UserPermanaHomeNumberBloc, UserPermanaHomeNumberState>(
+        listener: (context, state) {
+          if (state is UserPermanaHomeNumberFailed) {
+            showCustomSnackbar(context, state.e);
+          }
+        },
+        builder: (context, state) {
+          if (state is UserPermanaHomeNumberSuccess) {
+            return ListView(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 24,
+              ),
               children: [
-                PermanaHomeNumberItem(
-                  permanaHomeNumber: '121721721',
-                  isAktif: true,
-                  onPressedGanti: () {},
-                  onPressedHapus: () {},
-                ),
                 const SizedBox(
-                  height: 20,
+                  height: 30,
                 ),
-                PermanaHomeNumberItem(
-                  permanaHomeNumber: '121721721',
-                  isAktif: false,
-                  onPressedGanti: () {},
-                  onPressedHapus: () {},
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                PermanaHomeNumberItem(
-                  permanaHomeNumber: '121721721',
-                  isAktif: false,
-                  onPressedGanti: () {},
-                  onPressedHapus: () {},
+                Container(
+                  padding: const EdgeInsets.only(
+                    top: 20,
+                    bottom: 20,
+                  ),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(14),
+                    color: lightGreenColor,
+                  ),
+                  child: Column(
+                    children: state.userPermanaHomeNumbers
+                        .map(
+                          (userPermanaHomeNumber) => PermanaHomeNumberItem(
+                              permanaHomeNumber: userPermanaHomeNumber),
+                        )
+                        .toList(),
+                  ),
                 ),
               ],
-            ),
-          ),
-        ],
+            );
+          }
+
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: Container(

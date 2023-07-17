@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:permanahome/shared/theme.dart';
 import 'package:permanahome/ui/blocs/auth/auth_bloc.dart';
+import 'package:permanahome/ui/blocs/berita/berita_bloc.dart';
 import 'package:permanahome/ui/blocs/user_permana_home_number/user_permana_home_number_bloc.dart';
 import 'package:permanahome/ui/pages/detail_notifikasi_page.dart';
 import 'package:permanahome/ui/pages/detail_paket_page.dart';
@@ -51,6 +52,9 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) =>
               UserPermanaHomeNumberBloc()..add(UserPermanaHomeNumberGet()),
+        ),
+        BlocProvider(
+          create: (context) => BeritaBloc()..add(BeritaGet()),
         ),
       ],
       child: MaterialApp(

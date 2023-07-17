@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
 import 'package:permanahome/models/user_permana_home_number_model.dart';
-import 'package:permanahome/shared/shareds_method.dart';
 import 'package:permanahome/shared/theme.dart';
 import 'package:permanahome/ui/blocs/auth/auth_bloc.dart';
 import 'package:permanahome/ui/blocs/berita/berita_bloc.dart';
+import 'package:permanahome/ui/blocs/tagihan/tagihan_bloc.dart';
 import 'package:permanahome/ui/blocs/user_permana_home_number/user_permana_home_number_bloc.dart';
 import 'package:permanahome/ui/pages/set_page.dart';
 import 'package:permanahome/ui/widgets/berita_item.dart';
@@ -29,13 +30,8 @@ class HomePage extends StatelessWidget {
                   bottom: 20,
                 ),
                 color: lightGreenColor,
-                child: BlocConsumer<UserPermanaHomeNumberBloc,
+                child: BlocBuilder<UserPermanaHomeNumberBloc,
                     UserPermanaHomeNumberState>(
-                  listener: (context, state) {
-                    if (state is UserPermanaHomeNumberFailed) {
-                      showCustomSnackbar(context, state.e);
-                    }
-                  },
                   builder: (context, state) {
                     if (state is UserPermanaHomeNumberSuccess) {
                       return Column(
@@ -204,67 +200,95 @@ class HomePage extends StatelessWidget {
           const SizedBox(
             height: 10,
           ),
-          Row(
-            children: [
-              Text(
-                'Total Tagihan',
-                style: blackTextStyle.copyWith(
-                  fontSize: 15,
-                  fontWeight: semiBold,
-                ),
-              ),
-              const Spacer(),
-              Container(
-                width: 110,
-                height: 20,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: greenColor,
-                ),
-                child: Text(
-                  'Sudah dibayar',
-                  textAlign: TextAlign.center,
-                  style: darkGreenTextStyle.copyWith(
-                    fontSize: 13,
-                    fontWeight: semiBold,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          Text(
-            'total',
-            style: blackTextStyle.copyWith(
-              fontSize: 13,
-              fontWeight: semiBold,
-            ),
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          Container(
-            height: 37,
-            padding: const EdgeInsets.symmetric(horizontal: 4),
-            color: lightGreyColor,
-            child: Row(
-              children: [
-                Text(
-                  'Tagihan Berikutnya',
-                  style: blackTextStyle.copyWith(
-                    fontSize: 15,
-                    fontWeight: semiBold,
-                  ),
-                ),
-                const Spacer(),
-                Text(
-                  '28 Juni 2023',
-                  textAlign: TextAlign.center,
-                  style: blackTextStyle.copyWith(
-                    fontSize: 13,
-                    fontWeight: semiBold,
-                  ),
-                ),
-              ],
+          BlocProvider<TagihanBloc>(
+            create: (context) =>
+                TagihanBloc()..add(TagihanGetLatest(data.permanaHomeNumberId!)),
+            child: BlocBuilder<TagihanBloc, TagihanState>(
+              builder: (context, state) {
+                String? tanggalTagihanBerikutnya;
+                if (state is TagihanSuccess &&
+                    state.tagihan.tanggalAkhirTagihan != null) {
+                  var tanggal =
+                      DateTime.parse(state.tagihan.tanggalAkhirTagihan!);
+
+                  tanggalTagihanBerikutnya = DateFormat('EEE, d/M/y').format(
+                      DateTime(tanggal.year, tanggal.month, tanggal.day + 1));
+                }
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Text(
+                          'Total Tagihan',
+                          style: blackTextStyle.copyWith(
+                            fontSize: 15,
+                            fontWeight: semiBold,
+                          ),
+                        ),
+                        const Spacer(),
+                        Container(
+                          width: 110,
+                          height: 20,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: greenColor,
+                          ),
+                          child: Text(
+                            (state is TagihanSuccess &&
+                                    state.tagihan.statusPembayaran == 1)
+                                ? 'Sudah dibayar'
+                                : 'Belum dibayar',
+                            textAlign: TextAlign.center,
+                            style: darkGreenTextStyle.copyWith(
+                              fontSize: 13,
+                              fontWeight: semiBold,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    Text(
+                      (state is TagihanSuccess &&
+                              state.tagihan.jumlahTagihan != null)
+                          ? state.tagihan.jumlahTagihan!
+                          : '-',
+                      style: blackTextStyle.copyWith(
+                        fontSize: 13,
+                        fontWeight: semiBold,
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Container(
+                      height: 37,
+                      padding: const EdgeInsets.symmetric(horizontal: 4),
+                      color: lightGreyColor,
+                      child: Row(
+                        children: [
+                          Text(
+                            'Tagihan Berikutnya',
+                            style: blackTextStyle.copyWith(
+                              fontSize: 15,
+                              fontWeight: semiBold,
+                            ),
+                          ),
+                          const Spacer(),
+                          Text(
+                            tanggalTagihanBerikutnya.toString(),
+                            textAlign: TextAlign.center,
+                            style: blackTextStyle.copyWith(
+                              fontSize: 13,
+                              fontWeight: semiBold,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                );
+              },
             ),
           ),
         ],
@@ -416,31 +440,28 @@ class HomePage extends StatelessWidget {
         const SizedBox(
           height: 14,
         ),
-        BlocProvider(
-          create: (context) => BeritaBloc()..add(BeritaGet()),
-          child: BlocBuilder<BeritaBloc, BeritaState>(
-            builder: (context, state) {
-              if (state is BeritaSuccess) {
-                return SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: state.berita
-                        .map(
-                          (e) => Container(
-                            margin: const EdgeInsets.only(right: 10),
-                            child: BeritaItem(berita: e),
-                          ),
-                        )
-                        .toList(),
-                  ),
-                );
-              }
-
-              return const Center(
-                child: CircularProgressIndicator(),
+        BlocBuilder<BeritaBloc, BeritaState>(
+          builder: (context, state) {
+            if (state is BeritaSuccess) {
+              return SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: state.berita
+                      .map(
+                        (e) => Container(
+                          margin: const EdgeInsets.only(right: 10),
+                          child: BeritaItem(berita: e),
+                        ),
+                      )
+                      .toList(),
+                ),
               );
-            },
-          ),
+            }
+
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          },
         ),
       ],
     );

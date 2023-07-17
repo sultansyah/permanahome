@@ -6,3 +6,19 @@ abstract class TagihanEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
+
+class TagihanGetLatest extends TagihanEvent {
+  final int permanaHomeNumberId;
+  const TagihanGetLatest(this.permanaHomeNumberId);
+
+  @override
+  List<Object> get props => [permanaHomeNumberId];
+}
+
+class TagihanGet extends TagihanEvent {
+  final int userId;
+  const TagihanGet(this.userId);
+
+  @override
+  List<Object> get props => [userId];
+}

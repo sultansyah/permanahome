@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:permanahome/models/user_permana_home_number_model.dart';
-import 'package:permanahome/services/auth_services.dart';
+import 'package:permanahome/services/auth_service.dart';
 import 'package:permanahome/shared/shared_values.dart';
 
 class UserPermanaHomeNumbersService {
@@ -38,7 +38,7 @@ class UserPermanaHomeNumbersService {
       final res = await http.post(
         Uri.parse('$baseUrl/user-permana-home-number'),
         body: {
-          'permana_home_number_id': permanaHomeNumberId,
+          'permana_home_number_id': permanaHomeNumberId.toString(),
         },
         headers: {
           'Authorization': token,
@@ -62,7 +62,7 @@ class UserPermanaHomeNumbersService {
       final res = await http.put(
         Uri.parse('$baseUrl/user-permana-home-number'),
         body: {
-          'id': id,
+          "id": id.toString(),
         },
         headers: {
           'Authorization': token,
@@ -84,10 +84,7 @@ class UserPermanaHomeNumbersService {
       final token = await AuthService().getToken();
 
       final res = await http.delete(
-        Uri.parse('$baseUrl/user-permana-home-number'),
-        body: {
-          'id': id,
-        },
+        Uri.parse('$baseUrl/user-permana-home-number/${id.toString()}'),
         headers: {
           'Authorization': token,
         },

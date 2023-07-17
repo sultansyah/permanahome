@@ -4,7 +4,7 @@ import 'package:permanahome/models/sign_in_form_model.dart';
 import 'package:permanahome/models/sign_up_form_model.dart';
 import 'package:permanahome/models/user_edit_form_model.dart';
 import 'package:permanahome/models/user_model.dart';
-import 'package:permanahome/services/auth_services.dart';
+import 'package:permanahome/services/auth_service.dart';
 import 'package:permanahome/services/user_service.dart';
 
 part 'auth_event.dart';

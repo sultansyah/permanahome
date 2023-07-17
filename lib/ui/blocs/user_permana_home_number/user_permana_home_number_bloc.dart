@@ -48,6 +48,7 @@ class UserPermanaHomeNumberBloc
 
           final isSuccess =
               await UserPermanaHomeNumbersService().updateIsActive(event.id);
+
           if (!isSuccess) {
             throw 'Error';
           }
@@ -67,6 +68,7 @@ class UserPermanaHomeNumberBloc
 
           final isSuccess =
               await UserPermanaHomeNumbersService().delete(event.id);
+
           if (!isSuccess) {
             throw 'Error';
           }

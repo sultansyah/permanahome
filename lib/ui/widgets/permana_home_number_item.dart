@@ -1,19 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:permanahome/models/user_permana_home_number_model.dart';
 import 'package:permanahome/shared/theme.dart';
+import 'package:permanahome/ui/blocs/user_permana_home_number/user_permana_home_number_bloc.dart';
 import 'package:permanahome/ui/widgets/buttons.dart';
 
 class PermanaHomeNumberItem extends StatelessWidget {
-  final String permanaHomeNumber;
-  final bool isAktif;
-  final VoidCallback? onPressedHapus;
-  final VoidCallback? onPressedGanti;
+  final UserPermanaHomeNumber permanaHomeNumber;
 
   const PermanaHomeNumberItem({
     super.key,
     required this.permanaHomeNumber,
-    required this.isAktif,
-    this.onPressedHapus,
-    this.onPressedGanti,
   });
 
   @override
@@ -21,6 +18,7 @@ class PermanaHomeNumberItem extends StatelessWidget {
     return Container(
       width: 300,
       height: 100,
+      margin: const EdgeInsets.only(bottom: 10),
       padding: const EdgeInsets.all(5),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(14),
@@ -29,7 +27,7 @@ class PermanaHomeNumberItem extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          if (isAktif)
+          if (permanaHomeNumber.isActive == 1)
             Align(
               alignment: Alignment.topLeft,
               child: Text(
@@ -41,7 +39,7 @@ class PermanaHomeNumberItem extends StatelessWidget {
               ),
             ),
           Text(
-            permanaHomeNumber,
+            permanaHomeNumber.permanaHomeNumberId.toString(),
             style: blackTextStyle.copyWith(
               fontSize: 16,
               fontWeight: bold,
@@ -57,13 +55,16 @@ class PermanaHomeNumberItem extends StatelessWidget {
                 title: 'Hapus',
                 height: 40,
                 width: 120,
-                onPressed: onPressedHapus,
+                onPressed: () => context
+                    .read<UserPermanaHomeNumberBloc>()
+                    .add(UserPermanaHomeNumberDelete(permanaHomeNumber.id!)),
               ),
               CustomFilledButton(
                 title: 'Ganti',
                 height: 40,
                 width: 120,
-                onPressed: onPressedGanti,
+                onPressed: () => context.read<UserPermanaHomeNumberBloc>().add(
+                    UserPermanaHomeNumberUpdateIsActive(permanaHomeNumber.id!)),
               ),
             ],
           ),
