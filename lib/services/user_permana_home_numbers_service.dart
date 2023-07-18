@@ -48,6 +48,9 @@ class UserPermanaHomeNumbersService {
       if (res.statusCode == 200) {
         return true;
       }
+      if (res.statusCode == 409) {
+        throw jsonDecode(res.body)['message'];
+      }
 
       return jsonDecode(res.body)['message'];
     } catch (e) {

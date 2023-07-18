@@ -4,7 +4,6 @@ import 'package:permanahome/models/sign_up_form_model.dart';
 import 'package:permanahome/shared/shareds_method.dart';
 import 'package:permanahome/shared/theme.dart';
 import 'package:permanahome/ui/blocs/auth/auth_bloc.dart';
-import 'package:permanahome/ui/pages/sign_up_set_profile_page.dart';
 import 'package:permanahome/ui/widgets/buttons.dart';
 import 'package:permanahome/ui/widgets/forms.dart';
 
@@ -16,12 +15,12 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
-  final fullNameController = TextEditingController(text: '');
-  final emailController = TextEditingController(text: '');
-  final usernameController = TextEditingController(text: '');
-  final passwordController = TextEditingController(text: '');
-  final noHpController = TextEditingController(text: '');
-  final noWaController = TextEditingController(text: '');
+  final fullNameController = TextEditingController(text: 'fathanfathan');
+  final emailController = TextEditingController(text: 'fathanfathan@gmail.com');
+  final usernameController = TextEditingController(text: 'fathanfathan');
+  final passwordController = TextEditingController(text: 'fathanfathan');
+  final noHpController = TextEditingController(text: '2102190219021');
+  final noWaController = TextEditingController(text: '2102190219021');
 
   bool validate() {
     if (fullNameController.text.isEmpty ||
@@ -44,21 +43,27 @@ class _SignUpPageState extends State<SignUpPage> {
             showCustomSnackbar(context, state.e);
           }
 
-          if (state is AuthCheckEmailSuccess) {
-            Navigator.push(
+          if (state is AuthSuccess) {
+            Navigator.pushNamedAndRemoveUntil(
               context,
-              MaterialPageRoute(
-                builder: (context) => SignUpSetProfilePage(
-                  data: SignUpFormModel(
-                    fullName: fullNameController.text,
-                    email: emailController.text,
-                    password: passwordController.text,
-                    noHp: noHpController.text,
-                    noWa: noWaController.text,
-                  ),
-                ),
-              ),
+              '/home',
+              (route) => false,
             );
+          }
+
+          if (state is AuthCheckEmailSuccess) {
+            context.read<AuthBloc>().add(
+                  AuthRegister(
+                    SignUpFormModel(
+                      fullName: fullNameController.text,
+                      email: emailController.text,
+                      username: usernameController.text,
+                      password: passwordController.text,
+                      noHp: noHpController.text,
+                      noWa: noWaController.text,
+                    ),
+                  ),
+                );
           }
         },
         builder: (context, state) {
@@ -150,7 +155,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       height: 30,
                     ),
                     CustomFilledButton(
-                      title: 'Selanjutnya',
+                      title: 'Daftar',
                       onPressed: () {
                         if (validate()) {
                           context

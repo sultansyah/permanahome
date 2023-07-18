@@ -31,7 +31,14 @@ class AuthService {
     try {
       final res = await http.post(
         Uri.parse('$baseUrl/register'),
-        body: data.toJson(),
+        body: {
+          "full_name": data.fullName,
+          "email": data.email,
+          "username": data.username,
+          "password": data.password,
+          "no_hp": data.noHp,
+          "no_wa": data.noWa
+        },
       );
 
       if (res.statusCode == 200) {
@@ -42,7 +49,7 @@ class AuthService {
 
         return user;
       } else {
-        throw jsonDecode(res.body)['messages'];
+        throw jsonDecode(res.body)['message'];
       }
     } catch (e) {
       rethrow;
@@ -63,7 +70,7 @@ class AuthService {
 
         return user;
       } else {
-        throw jsonDecode(res.body)['messages'];
+        throw jsonDecode(res.body)['message'];
       }
     } catch (e) {
       rethrow;
@@ -84,7 +91,7 @@ class AuthService {
       if (res.statusCode == 200) {
         await clearLocalStorage();
       } else {
-        throw jsonDecode(res.body)['messages'];
+        throw jsonDecode(res.body)['message'];
       }
     } catch (e) {
       rethrow;
@@ -108,7 +115,7 @@ class AuthService {
       Map<String, String> values = await storage.readAll();
 
       if (values['email'] == null || values['password'] == null) {
-        throw 'authenticated';
+        throw 'not authenticated';
       } else {
         final SignInFormModel data = SignInFormModel(
           email: values['email'],

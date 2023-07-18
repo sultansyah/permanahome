@@ -16,8 +16,9 @@ class SignInPage extends StatefulWidget {
 }
 
 class _SignInPageState extends State<SignInPage> {
-  final emailController = TextEditingController(text: '');
-  final passwordController = TextEditingController(text: '');
+  final emailController =
+      TextEditingController(text: '1fathanfathan@gmail.com');
+  final passwordController = TextEditingController(text: '1fathanfathan');
 
   bool validate() {
     if (emailController.text.isEmpty || passwordController.text.isEmpty) {

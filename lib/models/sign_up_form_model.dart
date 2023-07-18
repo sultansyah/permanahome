@@ -3,7 +3,7 @@ class SignUpFormModel {
   final String? email;
   final String? username;
   final String? password;
-  final String? profilePicture;
+  // final String? profilePicture;
   final String? noHp;
   final String? noWa;
 
@@ -12,7 +12,7 @@ class SignUpFormModel {
     this.email,
     this.username,
     this.password,
-    this.profilePicture,
+    // this.profilePicture,
     this.noHp,
     this.noWa,
   });
@@ -23,7 +23,7 @@ class SignUpFormModel {
       'email': email,
       'username': username,
       'password': password,
-      'profile_picture': profilePicture,
+      // 'profile_picture': profilePicture,
       'no_hp': noHp,
       'no_wa': noWa,
     };
@@ -34,7 +34,7 @@ class SignUpFormModel {
         email: email,
         username: username,
         password: password,
-        profilePicture: profilePicture ?? this.profilePicture,
+        // profilePicture: profilePicture ?? this.profilePicture,
         noHp: noHp,
         noWa: noWa,
       );

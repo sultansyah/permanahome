@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:permanahome/shared/shareds_method.dart';
@@ -37,14 +35,7 @@ class _HubungkanPermanaHomeNumberPageState
           }
 
           if (state is UserPermanaHomeNumberSuccess) {
-            showCustomSnackbar(context, 'Berhasil ditambah');
-            Timer(const Duration(seconds: 2), () {
-              Navigator.pushNamedAndRemoveUntil(
-                context,
-                '/permana-home-number',
-                (route) => false,
-              );
-            });
+            showCustomSnackbar(context, 'Berhasil ditambah', seconds: 1);
           }
         },
         builder: (context, state) {

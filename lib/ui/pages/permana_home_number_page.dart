@@ -3,12 +3,18 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:permanahome/shared/shareds_method.dart';
 import 'package:permanahome/shared/theme.dart';
 import 'package:permanahome/ui/blocs/user_permana_home_number/user_permana_home_number_bloc.dart';
+
 import 'package:permanahome/ui/widgets/buttons.dart';
 import 'package:permanahome/ui/widgets/permana_home_number_item.dart';
 
-class PermanaHomeNumberPage extends StatelessWidget {
+class PermanaHomeNumberPage extends StatefulWidget {
   const PermanaHomeNumberPage({super.key});
 
+  @override
+  State<PermanaHomeNumberPage> createState() => _PermanaHomeNumberPageState();
+}
+
+class _PermanaHomeNumberPageState extends State<PermanaHomeNumberPage> {
   @override
   Widget build(BuildContext context) {
     context.read<UserPermanaHomeNumberBloc>().add(UserPermanaHomeNumberGet());
@@ -24,7 +30,8 @@ class PermanaHomeNumberPage extends StatelessWidget {
           }
         },
         builder: (context, state) {
-          if (state is UserPermanaHomeNumberSuccess) {
+          if (state is UserPermanaHomeNumberSuccess &&
+              state is! UserPermanaHomeNumberDataNotExist) {
             return ListView(
               padding: const EdgeInsets.symmetric(
                 horizontal: 24,
@@ -55,9 +62,7 @@ class PermanaHomeNumberPage extends StatelessWidget {
             );
           }
 
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
+          return Container();
         },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,

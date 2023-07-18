@@ -48,6 +48,8 @@ dependencies:
   flutter_signature_pad: ^3.0.1
   maps_launcher: ^2.2.0
   bloc: ^8.1.2
+  geolocator: ^9.0.2
+  geocoding: ^2.1.0
   
 
 dev_dependencies:

@@ -19,6 +19,8 @@ class UserPermanaHomeNumberFailed extends UserPermanaHomeNumberState {
   List<Object> get props => [e];
 }
 
+class UserPermanaHomeNumberDataNotExist extends UserPermanaHomeNumberState {}
+
 class UserPermanaHomeNumberSuccess extends UserPermanaHomeNumberState {
   final List<UserPermanaHomeNumber> userPermanaHomeNumbers;
   const UserPermanaHomeNumberSuccess(this.userPermanaHomeNumbers);

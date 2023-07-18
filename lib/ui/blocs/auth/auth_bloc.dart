@@ -33,6 +33,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           emit(AuthLoading());
 
           final user = await AuthService().register(event.data);
+
           emit(AuthSuccess(user));
         } catch (e) {
           rethrow;

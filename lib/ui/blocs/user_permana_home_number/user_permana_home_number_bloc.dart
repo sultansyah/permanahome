@@ -17,7 +17,11 @@ class UserPermanaHomeNumberBloc
           final List<UserPermanaHomeNumber> userPermanaHomeNumbers =
               await UserPermanaHomeNumbersService().get();
 
-          emit(UserPermanaHomeNumberSuccess(userPermanaHomeNumbers));
+          if (userPermanaHomeNumbers.isEmpty == true) {
+            emit(UserPermanaHomeNumberDataNotExist());
+          } else {
+            emit(UserPermanaHomeNumberSuccess(userPermanaHomeNumbers));
+          }
         } catch (e) {
           emit(UserPermanaHomeNumberFailed(e.toString()));
         }
@@ -76,7 +80,11 @@ class UserPermanaHomeNumberBloc
           final userPermanaHomeNumbers =
               await UserPermanaHomeNumbersService().get();
 
-          emit(UserPermanaHomeNumberSuccess(userPermanaHomeNumbers));
+          if (userPermanaHomeNumbers.isEmpty == true) {
+            emit(UserPermanaHomeNumberDataNotExist());
+          } else {
+            emit(UserPermanaHomeNumberSuccess(userPermanaHomeNumbers));
+          }
         } catch (e) {
           emit(UserPermanaHomeNumberFailed(e.toString()));
         }

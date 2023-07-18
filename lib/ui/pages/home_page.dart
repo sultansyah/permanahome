@@ -12,9 +12,14 @@ import 'package:permanahome/ui/widgets/berita_item.dart';
 import 'package:permanahome/ui/widgets/buttons.dart';
 import 'package:permanahome/ui/widgets/penawaran_item.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,7 +38,8 @@ class HomePage extends StatelessWidget {
                 child: BlocBuilder<UserPermanaHomeNumberBloc,
                     UserPermanaHomeNumberState>(
                   builder: (context, state) {
-                    if (state is UserPermanaHomeNumberSuccess) {
+                    if (state is UserPermanaHomeNumberSuccess &&
+                        state is! UserPermanaHomeNumberDataNotExist) {
                       return Column(
                         children: [
                           buildProfile(context),
