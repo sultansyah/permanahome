@@ -31,189 +31,193 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        margin: const EdgeInsets.symmetric(
-          horizontal: 24,
-          vertical: 39,
-        ),
-        decoration: BoxDecoration(
-          color: whiteColor,
-          borderRadius: BorderRadius.circular(20),
-        ),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              CarouselSlider(
-                items: [
-                  Image.asset(
-                    'assets/img_onboarding1.png',
-                    height: 331,
-                  ),
-                  Image.asset(
-                    'assets/img_onboarding2.png',
-                    height: 331,
-                  ),
-                  Image.asset(
-                    'assets/img_onboarding3.png',
-                    height: 331,
-                  ),
-                  Image.asset(
-                    'assets/img_onboarding4.png',
-                    height: 331,
-                  ),
-                ],
-                carouselController: carouselController,
-                options: CarouselOptions(
-                  height: 331,
-                  viewportFraction: 1,
-                  enableInfiniteScroll: false,
-                  onPageChanged: (index, reason) {
-                    setState(
-                      () {
-                        currentIndex = index;
-                      },
-                    );
-                  },
-                ),
-              ),
-              const SizedBox(
-                height: 121,
-              ),
-              Column(
+      body: ListView(
+        children: [
+          Container(
+            margin: const EdgeInsets.symmetric(
+              horizontal: 24,
+              vertical: 39,
+            ),
+            decoration: BoxDecoration(
+              color: whiteColor,
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    titles[currentIndex],
-                    style: blackTextStyle.copyWith(
-                      fontSize: 20,
-                      fontWeight: semiBold,
+                  CarouselSlider(
+                    items: [
+                      Image.asset(
+                        'assets/img_onboarding1.png',
+                        height: 331,
+                      ),
+                      Image.asset(
+                        'assets/img_onboarding2.png',
+                        height: 331,
+                      ),
+                      Image.asset(
+                        'assets/img_onboarding3.png',
+                        height: 331,
+                      ),
+                      Image.asset(
+                        'assets/img_onboarding4.png',
+                        height: 331,
+                      ),
+                    ],
+                    carouselController: carouselController,
+                    options: CarouselOptions(
+                      height: 331,
+                      viewportFraction: 1,
+                      enableInfiniteScroll: false,
+                      onPageChanged: (index, reason) {
+                        setState(
+                          () {
+                            currentIndex = index;
+                          },
+                        );
+                      },
                     ),
-                    textAlign: TextAlign.center,
                   ),
                   const SizedBox(
-                    height: 24,
+                    height: 121,
                   ),
-                  Text(
-                    subtitles[currentIndex],
-                    textAlign: TextAlign.center,
-                    style: greyTextStyle.copyWith(
-                      fontSize: 16,
-                    ),
-                  ),
-                  SizedBox(
-                    height: currentIndex == 3 ? 17 : 24,
-                  ),
-                  currentIndex == 3
-                      ? Column(
-                          children: [
-                            Container(
-                              margin: const EdgeInsets.symmetric(
-                                horizontal: 30,
-                              ),
-                              child: CustomFilledButton(
-                                title: 'Daftar',
-                                onPressed: () {
-                                  Navigator.pushNamedAndRemoveUntil(
-                                    context,
-                                    '/sign-up',
-                                    (route) => false,
-                                  );
-                                },
-                              ),
-                            ),
-                            CustomTextButton(
-                              title: 'Masuk',
-                              onPressed: () {
-                                Navigator.pushNamedAndRemoveUntil(
-                                  context,
-                                  '/sign-in',
-                                  (route) => false,
-                                );
-                              },
-                            ),
-                          ],
-                        )
-                      : Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
+                  Column(
+                    children: [
+                      Text(
+                        titles[currentIndex],
+                        style: blackTextStyle.copyWith(
+                          fontSize: 20,
+                          fontWeight: semiBold,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(
+                        height: 24,
+                      ),
+                      Text(
+                        subtitles[currentIndex],
+                        textAlign: TextAlign.center,
+                        style: greyTextStyle.copyWith(
+                          fontSize: 16,
+                        ),
+                      ),
+                      SizedBox(
+                        height: currentIndex == 3 ? 17 : 24,
+                      ),
+                      currentIndex == 3
+                          ? Column(
                               children: [
                                 Container(
-                                  width: 12,
-                                  height: 12,
-                                  margin: const EdgeInsets.only(
-                                    right: 10,
+                                  margin: const EdgeInsets.symmetric(
+                                    horizontal: 30,
                                   ),
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: currentIndex == 0
-                                        ? lightGreenColor
-                                        : lightBackgroundColor,
-                                  ),
-                                ),
-                                Container(
-                                  width: 12,
-                                  height: 12,
-                                  margin: const EdgeInsets.only(
-                                    right: 10,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: currentIndex == 1
-                                        ? lightGreenColor
-                                        : lightBackgroundColor,
+                                  child: CustomFilledButton(
+                                    title: 'Daftar',
+                                    onPressed: () {
+                                      Navigator.pushNamedAndRemoveUntil(
+                                        context,
+                                        '/sign-up',
+                                        (route) => false,
+                                      );
+                                    },
                                   ),
                                 ),
-                                Container(
-                                  width: 12,
-                                  height: 12,
-                                  margin: const EdgeInsets.only(
-                                    right: 10,
-                                  ),
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: currentIndex == 2
-                                        ? lightGreenColor
-                                        : lightBackgroundColor,
-                                  ),
+                                CustomTextButton(
+                                  title: 'Masuk',
+                                  onPressed: () {
+                                    Navigator.pushNamedAndRemoveUntil(
+                                      context,
+                                      '/sign-in',
+                                      (route) => false,
+                                    );
+                                  },
+                                ),
+                              ],
+                            )
+                          : Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Container(
+                                      width: 12,
+                                      height: 12,
+                                      margin: const EdgeInsets.only(
+                                        right: 10,
+                                      ),
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: currentIndex == 0
+                                            ? lightGreenColor
+                                            : lightBackgroundColor,
+                                      ),
+                                    ),
+                                    Container(
+                                      width: 12,
+                                      height: 12,
+                                      margin: const EdgeInsets.only(
+                                        right: 10,
+                                      ),
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: currentIndex == 1
+                                            ? lightGreenColor
+                                            : lightBackgroundColor,
+                                      ),
+                                    ),
+                                    Container(
+                                      width: 12,
+                                      height: 12,
+                                      margin: const EdgeInsets.only(
+                                        right: 10,
+                                      ),
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: currentIndex == 2
+                                            ? lightGreenColor
+                                            : lightBackgroundColor,
+                                      ),
+                                    ),
+                                    Container(
+                                      width: 12,
+                                      height: 12,
+                                      margin: const EdgeInsets.only(
+                                        right: 10,
+                                      ),
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: currentIndex == 3
+                                            ? lightGreenColor
+                                            : lightBackgroundColor,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: 24,
                                 ),
                                 Container(
-                                  width: 12,
-                                  height: 12,
-                                  margin: const EdgeInsets.only(
-                                    right: 10,
+                                  margin: const EdgeInsets.symmetric(
+                                    horizontal: 30,
                                   ),
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: currentIndex == 3
-                                        ? lightGreenColor
-                                        : lightBackgroundColor,
+                                  child: CustomFilledButton(
+                                    title: 'Selanjutnya',
+                                    onPressed: () {
+                                      carouselController.nextPage();
+                                    },
                                   ),
                                 ),
                               ],
                             ),
-                            const SizedBox(
-                              height: 24,
-                            ),
-                            Container(
-                              margin: const EdgeInsets.symmetric(
-                                horizontal: 30,
-                              ),
-                              child: CustomFilledButton(
-                                title: 'Selanjutnya',
-                                onPressed: () {
-                                  carouselController.nextPage();
-                                },
-                              ),
-                            ),
-                          ],
-                        ),
+                    ],
+                  ),
                 ],
               ),
-            ],
+            ),
           ),
-        ),
+        ],
       ),
     );
   }

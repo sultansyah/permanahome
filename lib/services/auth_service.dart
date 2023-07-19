@@ -62,6 +62,7 @@ class AuthService {
         Uri.parse('$baseUrl/login'),
         body: data.toJson(),
       );
+
       if (res.statusCode == 200) {
         UserModel user = UserModel.fromJson(jsonDecode(res.body));
         user = user.copyWith(password: data.password);

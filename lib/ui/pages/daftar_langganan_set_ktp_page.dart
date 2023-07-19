@@ -1,14 +1,21 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:permanahome/models/formulir_instalasi_model.dart';
 import 'package:permanahome/shared/shareds_method.dart';
 import 'package:permanahome/shared/theme.dart';
 import 'package:permanahome/ui/pages/daftar_langganan_set_ttd_page.dart';
 import 'package:permanahome/ui/widgets/buttons.dart';
 
 class DaftarLanggananSetKTPPage extends StatefulWidget {
-  const DaftarLanggananSetKTPPage({super.key});
+  final FormulirInstalasi formulirInstalasi;
+
+  const DaftarLanggananSetKTPPage({
+    super.key,
+    required this.formulirInstalasi,
+  });
 
   @override
   State<DaftarLanggananSetKTPPage> createState() =>
@@ -21,6 +28,7 @@ class _DaftarLanggananSetKTPPageState extends State<DaftarLanggananSetKTPPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(automaticallyImplyLeading: true),
       body: ListView(
         padding: const EdgeInsets.symmetric(
           horizontal: 24,
@@ -30,8 +38,8 @@ class _DaftarLanggananSetKTPPageState extends State<DaftarLanggananSetKTPPage> {
             width: 155,
             height: 50,
             margin: const EdgeInsets.only(
-              top: 100,
-              bottom: 100,
+              top: 10,
+              bottom: 20,
             ),
             decoration: const BoxDecoration(
               image: DecorationImage(
@@ -47,7 +55,7 @@ class _DaftarLanggananSetKTPPageState extends State<DaftarLanggananSetKTPPage> {
             ),
           ),
           const SizedBox(
-            height: 30,
+            height: 10,
           ),
           Container(
             padding: const EdgeInsets.all(22),
@@ -107,7 +115,14 @@ class _DaftarLanggananSetKTPPageState extends State<DaftarLanggananSetKTPPage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const DaftarLanggananSetTtdPage(),
+                        builder: (context) => DaftarLanggananSetTtdPage(
+                          formulirInstalasi: widget.formulirInstalasi.copyWith(
+                            ktp: 'data:image/png;base64,' +
+                                base64Encode(
+                                  File(selectedImage!.path).readAsBytesSync(),
+                                ),
+                          ),
+                        ),
                       ),
                     );
                   },

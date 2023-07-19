@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:permanahome/shared/theme.dart';
-import 'package:permanahome/ui/widgets/paket_item.dart';
 
 class UpgradePaketPage extends StatelessWidget {
   const UpgradePaketPage({super.key});
@@ -54,39 +53,27 @@ class UpgradePaketPage extends StatelessWidget {
                     ),
                     child: Column(
                       children: [
-                        PaketItem(
-                          namaPaket: 'Lite',
-                          kecepatan: '25 Down & 10 Mbps Up',
-                          harga: 'Rp.249.000,-/BULAN',
-                          onPressed: () {
-                            Navigator.pushNamed(
-                                context, '/detail-upgrade-paket');
-                          },
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        PaketItem(
-                          namaPaket: 'Smart',
-                          kecepatan: '50 Down & 20 Mbps Up',
-                          harga: 'Rp.369.000,-/BULAN',
-                          onPressed: () {
-                            Navigator.pushNamed(
-                                context, '/detail-upgrade-paket');
-                          },
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        PaketItem(
-                          namaPaket: 'HAPPY',
-                          kecepatan: '100 Down & 30 Mbps Up',
-                          harga: 'Rp.499.000,-/BULAN',
-                          onPressed: () {
-                            Navigator.pushNamed(
-                                context, '/detail-upgrade-paket');
-                          },
-                        ),
+                        // PaketItem(
+                        //   namaPaket: 'Lite',
+                        //   kecepatan: '25 Down & 10 Mbps Up',
+                        //   paketLayanan: state.paketLayanan[0],
+                        // ),
+                        // const SizedBox(
+                        //   height: 20,
+                        // ),
+                        // PaketItem(
+                        //   namaPaket: 'Smart',
+                        //   kecepatan: '50 Down & 20 Mbps Up',
+                        //   paketLayanan: state.paketLayanan[1],
+                        // ),
+                        // const SizedBox(
+                        //   height: 20,
+                        // ),
+                        // PaketItem(
+                        //   namaPaket: 'HAPPY',
+                        //   kecepatan: '100 Down & 30 Mbps Up',
+                        //   paketLayanan: state.paketLayanan[2],
+                        // ),
                       ],
                     ),
                   ),

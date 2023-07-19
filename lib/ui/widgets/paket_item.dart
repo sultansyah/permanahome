@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:permanahome/models/paket_layanan_model.dart';
 import 'package:permanahome/shared/theme.dart';
+import 'package:permanahome/ui/pages/detail_paket_page.dart';
 import 'package:permanahome/ui/widgets/buttons.dart';
 
 class PaketItem extends StatelessWidget {
+  final PaketLayanan paketLayanan;
   final String namaPaket;
   final String kecepatan;
-  final String harga;
-  final VoidCallback? onPressed;
 
   const PaketItem({
     super.key,
     required this.namaPaket,
     required this.kecepatan,
-    required this.harga,
-    this.onPressed,
+    required this.paketLayanan,
   });
 
   @override
@@ -62,7 +62,7 @@ class PaketItem extends StatelessWidget {
             height: 5,
           ),
           Text(
-            harga,
+            'Rp.${paketLayanan.biaya!},-/BULAN',
             style: blackTextStyle.copyWith(
               fontSize: 18,
               fontWeight: bold,
@@ -75,7 +75,16 @@ class PaketItem extends StatelessWidget {
             title: 'Detail',
             height: 40,
             width: 150,
-            onPressed: onPressed,
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => DetailPaketPage(
+                    paketLayanan: paketLayanan,
+                  ),
+                ),
+              );
+            },
           ),
         ],
       ),

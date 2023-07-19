@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:permanahome/models/formulir_instalasi_model.dart';
+import 'package:permanahome/models/paket_layanan_model.dart';
 import 'package:permanahome/shared/theme.dart';
 import 'package:permanahome/ui/pages/daftar_langganan_set_ktp_page.dart';
 import 'package:permanahome/ui/widgets/buttons.dart';
 import 'package:permanahome/ui/widgets/forms.dart';
 
 class DaftarLanggananPage extends StatefulWidget {
-  final String namaPaket;
+  final PaketLayanan paketLayanan;
 
   const DaftarLanggananPage({
     super.key,
-    required this.namaPaket,
+    required this.paketLayanan,
   });
 
   @override
@@ -17,20 +19,22 @@ class DaftarLanggananPage extends StatefulWidget {
 }
 
 class _DaftarLanggananPageState extends State<DaftarLanggananPage> {
-  final namaLengkapController = TextEditingController(text: '');
-  final emailController = TextEditingController(text: '');
-  final alamatInstalasiController = TextEditingController(text: '');
-  final kotaController = TextEditingController(text: '');
-  final provinsiController = TextEditingController(text: '');
-  final noHpController = TextEditingController(text: '');
-  final noWaController = TextEditingController(text: '');
-  final kodePosController = TextEditingController(text: '');
+  final namaLengkapController = TextEditingController(text: 'fathanfathan');
+  final emailController = TextEditingController(text: 'fathanfathan@gmail.com');
+  final alamatInstalasiController = TextEditingController(text: 'fathanfathan');
+  final negaraController = TextEditingController(text: 'fathanfathan');
+  final provinsiController = TextEditingController(text: 'fathanfathan');
+  final kotaController = TextEditingController(text: 'fathanfathan');
+  final noHpController = TextEditingController(text: '21921921829');
+  final noWaController = TextEditingController(text: '21921921829');
+  final kodePosController = TextEditingController(text: '219219');
 
   bool validate() {
     if (namaLengkapController.text.isEmpty ||
         emailController.text.isEmpty ||
-        kotaController.text.isEmpty ||
         provinsiController.text.isEmpty ||
+        negaraController.text.isEmpty ||
+        kotaController.text.isEmpty ||
         noHpController.text.isEmpty ||
         noWaController.text.isEmpty ||
         kodePosController.text.isEmpty) {
@@ -43,6 +47,7 @@ class _DaftarLanggananPageState extends State<DaftarLanggananPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(automaticallyImplyLeading: true),
       body: ListView(
         padding: const EdgeInsets.symmetric(
           horizontal: 24,
@@ -52,8 +57,8 @@ class _DaftarLanggananPageState extends State<DaftarLanggananPage> {
             width: 155,
             height: 50,
             margin: const EdgeInsets.only(
-              top: 100,
-              bottom: 100,
+              top: 10,
+              bottom: 20,
             ),
             decoration: const BoxDecoration(
               image: DecorationImage(
@@ -81,7 +86,7 @@ class _DaftarLanggananPageState extends State<DaftarLanggananPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Paket: ${widget.namaPaket}',
+                  'Paket: ${widget.paketLayanan.nama}',
                   style: blackTextStyle.copyWith(
                     fontSize: 16,
                     fontWeight: semiBold,
@@ -115,8 +120,8 @@ class _DaftarLanggananPageState extends State<DaftarLanggananPage> {
                   height: 16,
                 ),
                 CustomFormField(
-                  title: 'Kota',
-                  controller: kotaController,
+                  title: 'Negara',
+                  controller: negaraController,
                 ),
                 const SizedBox(
                   height: 16,
@@ -124,6 +129,13 @@ class _DaftarLanggananPageState extends State<DaftarLanggananPage> {
                 CustomFormField(
                   title: 'Provinsi',
                   controller: provinsiController,
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+                CustomFormField(
+                  title: 'Kota',
+                  controller: kotaController,
                 ),
                 const SizedBox(
                   height: 16,
@@ -155,7 +167,20 @@ class _DaftarLanggananPageState extends State<DaftarLanggananPage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const DaftarLanggananSetKTPPage(),
+                        builder: (context) => DaftarLanggananSetKTPPage(
+                          formulirInstalasi: FormulirInstalasi(
+                            fullName: namaLengkapController.text,
+                            email: emailController.text,
+                            noHp: noHpController.text,
+                            noWa: noWaController.text,
+                            negara: negaraController.text,
+                            provinsi: provinsiController.text,
+                            kota: kotaController.text,
+                            alamatInstalasi: alamatInstalasiController.text,
+                            kodePos: kodePosController.text,
+                            paketLayananId: widget.paketLayanan.id,
+                          ),
+                        ),
                       ),
                     );
                   },

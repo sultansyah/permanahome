@@ -1,21 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:collection/collection.dart';
+
+import 'package:permanahome/models/paket_layanan_model.dart';
 import 'package:permanahome/shared/theme.dart';
 import 'package:permanahome/ui/pages/daftar_langganan_page.dart';
 import 'package:permanahome/ui/widgets/buttons.dart';
 
-class DetailPaketPage extends StatefulWidget {
-  const DetailPaketPage({super.key});
+class DetailPaketPage extends StatelessWidget {
+  final PaketLayanan paketLayanan;
 
-  @override
-  State<DetailPaketPage> createState() => _DetailPaketPageState();
-}
+  const DetailPaketPage({
+    super.key,
+    required this.paketLayanan,
+  });
 
-class _DetailPaketPageState extends State<DetailPaketPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Detail Paket"),
+        title: Text("Detail Paket ${paketLayanan.nama}"),
       ),
       body: ListView(
         children: [
@@ -42,7 +45,7 @@ class _DetailPaketPageState extends State<DetailPaketPage> {
                   child: Column(
                     children: [
                       Text(
-                        'LITE',
+                        paketLayanan.nama ?? '',
                         style: whiteTextStyle.copyWith(
                           fontSize: 30,
                           fontWeight: semiBold,
@@ -52,7 +55,7 @@ class _DetailPaketPageState extends State<DetailPaketPage> {
                         height: 20,
                       ),
                       Text(
-                        'Rp.249.000,-/BULAN',
+                        'Rp.${paketLayanan.biaya ?? ''},-/BULAN',
                         style: whiteTextStyle.copyWith(
                           fontSize: 30,
                           fontWeight: semiBold,
@@ -61,13 +64,17 @@ class _DetailPaketPageState extends State<DetailPaketPage> {
                     ],
                   ),
                 ),
-                buildText('Up To 25 Mbps Download', darkGreyColor),
-                buildText('Up To 10 Mbps Upload', lightGreyColor),
-                buildText('Kontrak Minimal 12 Bulan', darkGreyColor),
-                buildText('Private IP Address', lightGreyColor),
-                buildText('Unlimited Data', darkGreyColor),
-                buildText('SLA : Best Effort', lightGreyColor),
-                buildText('Tanpa FUP', darkGreyColor),
+                Column(
+                  children: paketLayanan.deskripsi
+                          ?.split(', ')
+                          .mapIndexed((index, element) => buildText(
+                              element,
+                              (index % 2 == 0)
+                                  ? darkGreyColor
+                                  : lightGreyColor))
+                          .toList() ??
+                      [],
+                ),
                 const SizedBox(
                   height: 30,
                 ),
@@ -79,8 +86,8 @@ class _DetailPaketPageState extends State<DetailPaketPage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const DaftarLanggananPage(
-                          namaPaket: 'Lite',
+                        builder: (context) => DaftarLanggananPage(
+                          paketLayanan: paketLayanan,
                         ),
                       ),
                     );

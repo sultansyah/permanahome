@@ -14,8 +14,7 @@ class PaketLayananBloc extends Bloc<PaketLayananEvent, PaketLayananState> {
           emit(PaketLayananLoading());
 
           final List<PaketLayanan> paketLayanan =
-              await PaketLayananService().getAllByArea('Medan');
-
+              await PaketLayananService().getAllByArea(event.area);
           if (paketLayanan.isEmpty == true) {
             emit(PaketLayananDataNotExist());
           } else {

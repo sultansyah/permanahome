@@ -7,7 +7,6 @@ import 'ui/blocs/auth/auth_bloc.dart';
 import 'ui/blocs/berita/berita_bloc.dart';
 import 'ui/blocs/user_permana_home_number/user_permana_home_number_bloc.dart';
 import 'ui/pages/detail_notifikasi_page.dart';
-import 'ui/pages/detail_paket_page.dart';
 import 'ui/pages/detail_pertanyaan_page.dart';
 import 'ui/pages/detail_riwayat_page.dart';
 import 'ui/pages/detail_upgrade_paket_page.dart';
@@ -82,7 +81,6 @@ class MyApp extends StatelessWidget {
           '/home': (context) => const SetPage(),
           '/profile': (context) => const ProfilePage(),
           '/paket': (context) => const PaketPage(),
-          '/detail-paket': (context) => const DetailPaketPage(),
           '/detail-upgrade-paket': (context) => const DetailUpgradePaketPage(),
           '/upgrade-paket': (context) => const UpgradePaketPage(),
           '/permana-home-number': (context) => const PermanaHomeNumberPage(),
