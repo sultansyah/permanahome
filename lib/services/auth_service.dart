@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
+import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:permanahome/models/sign_in_form_model.dart';
 import 'package:permanahome/models/sign_up_form_model.dart';
 import 'package:permanahome/models/user_model.dart';
@@ -136,8 +137,20 @@ class AuthService {
     const storage = FlutterSecureStorage();
     String? value = await storage.read(key: 'token');
 
-    if (value != null) {
+    if (value != null && JwtDecoder.isExpired(value)) {
       token = 'Bearer $value';
+    }
+    if (value != null && JwtDecoder.isExpired(value) == false) {
+      final SignInFormModel data = await AuthService().getCredentialFormLocal();
+
+      await clearLocalStorage();
+      await login(data);
+
+      String? value = await storage.read(key: 'token');
+
+      if (value != null) {
+        token = 'Bearer $value';
+      }
     }
 
     return token;

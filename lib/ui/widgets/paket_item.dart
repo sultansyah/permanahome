@@ -8,12 +8,14 @@ class PaketItem extends StatelessWidget {
   final PaketLayanan paketLayanan;
   final String namaPaket;
   final String kecepatan;
+  final VoidCallback onPressed;
 
   const PaketItem({
     super.key,
     required this.namaPaket,
     required this.kecepatan,
     required this.paketLayanan,
+    required this.onPressed,
   });
 
   @override
@@ -75,16 +77,7 @@ class PaketItem extends StatelessWidget {
             title: 'Detail',
             height: 40,
             width: 150,
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => DetailPaketPage(
-                    paketLayanan: paketLayanan,
-                  ),
-                ),
-              );
-            },
+            onPressed: onPressed,
           ),
         ],
       ),

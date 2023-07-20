@@ -8,6 +8,7 @@ import 'package:permanahome/ui/blocs/berita/berita_bloc.dart';
 import 'package:permanahome/ui/blocs/tagihan/tagihan_bloc.dart';
 import 'package:permanahome/ui/blocs/user_permana_home_number/user_permana_home_number_bloc.dart';
 import 'package:permanahome/ui/pages/set_page.dart';
+import 'package:permanahome/ui/pages/upgrade_paket_page.dart';
 import 'package:permanahome/ui/widgets/berita_item.dart';
 import 'package:permanahome/ui/widgets/buttons.dart';
 import 'package:permanahome/ui/widgets/penawaran_item.dart';
@@ -78,7 +79,22 @@ class _HomePageState extends State<HomePage> {
                     const SizedBox(
                       height: 25,
                     ),
-                    buildPenawaranTerbaru(context),
+                    BlocBuilder<UserPermanaHomeNumberBloc,
+                        UserPermanaHomeNumberState>(
+                      builder: (context, state) {
+                        if (state is UserPermanaHomeNumberSuccess &&
+                            state is! UserPermanaHomeNumberDataNotExist) {
+                          return buildPenawaranTerbaru(
+                            context,
+                            state.userPermanaHomeNumbers
+                                .firstWhere((element) => element.isActive == 1)
+                                .permanaHomeNumberId
+                                .toString(),
+                          );
+                        }
+                        return Container();
+                      },
+                    ),
                     const SizedBox(
                       height: 17,
                     ),
@@ -380,7 +396,8 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget buildPenawaranTerbaru(BuildContext context) {
+  Widget buildPenawaranTerbaru(
+      BuildContext context, String permanaHomeNumberId) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -402,7 +419,14 @@ class _HomePageState extends State<HomePage> {
                 title: 'Ayo Upgrade Sekararang Juga Semuanya',
                 gambar: 'assets/img_penawaran1.png',
                 onPressed: () {
-                  Navigator.pushNamed(context, '/upgrade-paket');
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => UpgradePaketPage(
+                        permanaHomeNumberId: permanaHomeNumberId,
+                      ),
+                    ),
+                  );
                 },
               ),
               // const SizedBox(

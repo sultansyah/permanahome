@@ -8,7 +8,6 @@ import 'ui/blocs/berita/berita_bloc.dart';
 import 'ui/blocs/user_permana_home_number/user_permana_home_number_bloc.dart';
 import 'ui/pages/detail_pertanyaan_page.dart';
 import 'ui/pages/detail_riwayat_page.dart';
-import 'ui/pages/detail_upgrade_paket_page.dart';
 import 'ui/pages/edit_profile_page.dart';
 import 'ui/pages/hubungkan_permana_home_number_page.dart';
 import 'ui/pages/laporkan_page.dart';
@@ -24,7 +23,6 @@ import 'ui/pages/sign_in_page.dart';
 import 'ui/pages/sign_up_page.dart';
 import 'ui/pages/splash_page.dart';
 import 'ui/pages/tentang_page.dart';
-import 'ui/pages/upgrade_paket_page.dart';
 
 void main() {
   SystemChrome.setSystemUIOverlayStyle(
@@ -80,8 +78,6 @@ class MyApp extends StatelessWidget {
           '/home': (context) => const SetPage(),
           '/profile': (context) => const ProfilePage(),
           '/paket': (context) => const PaketPage(),
-          '/detail-upgrade-paket': (context) => const DetailUpgradePaketPage(),
-          '/upgrade-paket': (context) => const UpgradePaketPage(),
           '/permana-home-number': (context) => const PermanaHomeNumberPage(),
           '/hubungkan-permana-home-number': (context) =>
               const HubungkanPermanaHomeNumberPage(),

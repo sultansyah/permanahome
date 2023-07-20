@@ -5,6 +5,7 @@ import 'package:permanahome/shared/shareds_method.dart';
 
 import 'package:permanahome/shared/theme.dart';
 import 'package:permanahome/ui/blocs/paket_layanan/paket_layanan_bloc.dart';
+import 'package:permanahome/ui/pages/detail_paket_page.dart';
 import 'package:permanahome/ui/widgets/paket_item.dart';
 
 class PaketPage extends StatefulWidget {
@@ -75,6 +76,16 @@ class _PaketPageState extends State<PaketPage> {
                           namaPaket: 'Lite',
                           kecepatan: '25 Down & 10 Mbps Up',
                           paketLayanan: state.paketLayanan[0],
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => DetailPaketPage(
+                                  paketLayanan: state.paketLayanan[0],
+                                ),
+                              ),
+                            );
+                          },
                         ),
                         const SizedBox(
                           height: 20,
@@ -83,6 +94,16 @@ class _PaketPageState extends State<PaketPage> {
                           namaPaket: 'Smart',
                           kecepatan: '50 Down & 20 Mbps Up',
                           paketLayanan: state.paketLayanan[1],
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => DetailPaketPage(
+                                  paketLayanan: state.paketLayanan[1],
+                                ),
+                              ),
+                            );
+                          },
                         ),
                         const SizedBox(
                           height: 20,
@@ -91,6 +112,16 @@ class _PaketPageState extends State<PaketPage> {
                           namaPaket: 'HAPPY',
                           kecepatan: '100 Down & 30 Mbps Up',
                           paketLayanan: state.paketLayanan[2],
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => DetailPaketPage(
+                                  paketLayanan: state.paketLayanan[2],
+                                ),
+                              ),
+                            );
+                          },
                         ),
                       ],
                     ),
