@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:permanahome/models/paket_layanan_model.dart';
 import 'package:permanahome/shared/theme.dart';
-import 'package:permanahome/ui/pages/detail_paket_page.dart';
 import 'package:permanahome/ui/widgets/buttons.dart';
 
 class PaketItem extends StatelessWidget {

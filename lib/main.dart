@@ -6,7 +6,7 @@ import 'shared/theme.dart';
 import 'ui/blocs/auth/auth_bloc.dart';
 import 'ui/blocs/berita/berita_bloc.dart';
 import 'ui/blocs/user_permana_home_number/user_permana_home_number_bloc.dart';
-import 'ui/pages/detail_pertanyaan_page.dart';
+
 import 'ui/pages/detail_riwayat_page.dart';
 import 'ui/pages/edit_profile_page.dart';
 import 'ui/pages/hubungkan_permana_home_number_page.dart';
@@ -84,7 +84,6 @@ class MyApp extends StatelessWidget {
           '/riwayat': (context) => const RiwayatPage(),
           '/detail-riwayat': (context) => const DetailRiwayatPage(),
           '/pertanyaan': (context) => const PertanyaanPage(),
-          '/detail-pertanyaan': (context) => const DetailPertanyaan(),
           '/laporkan': (context) => const LaporkanPage(),
           '/masukan': (context) => const MasukanPage(),
           '/tentang': (context) => const TentangPage(),
