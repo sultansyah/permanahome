@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:permanahome/shared/shared_values.dart';
 import 'package:permanahome/shared/shareds_method.dart';
 
 import 'package:permanahome/shared/theme.dart';
@@ -14,8 +15,6 @@ class PaketPage extends StatefulWidget {
 }
 
 class _PaketPageState extends State<PaketPage> {
-  final String area = 'Medan';
-
   @override
   Widget build(BuildContext context) {
     // void get() async {

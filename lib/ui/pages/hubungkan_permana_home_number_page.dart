@@ -31,7 +31,7 @@ class _HubungkanPermanaHomeNumberPageState
       body: BlocConsumer<UserPermanaHomeNumberBloc, UserPermanaHomeNumberState>(
         listener: (context, state) {
           if (state is UserPermanaHomeNumberFailed) {
-            showCustomSnackbar(context, state.e);
+            showCustomSnackbar(context, 'Nomor salah');
           }
 
           if (state is UserPermanaHomeNumberSuccess) {

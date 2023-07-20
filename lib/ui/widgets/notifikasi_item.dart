@@ -1,22 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:permanahome/models/notifikasi_model.dart';
 import 'package:permanahome/shared/theme.dart';
+import 'package:permanahome/ui/pages/detail_notifikasi_page.dart';
 
 class NotifikasiItem extends StatelessWidget {
-  final String title;
-  final String tanggal;
-  final VoidCallback? onPressed;
+  final Notifikasi notifikasi;
 
   const NotifikasiItem({
     super.key,
-    required this.title,
-    required this.tanggal,
-    this.onPressed,
+    required this.notifikasi,
   });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onPressed,
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => DetailNotifikasiPage(notifikasi: notifikasi),
+          ),
+        );
+      },
       child: Row(
         children: [
           Icon(
@@ -32,15 +37,16 @@ class NotifikasiItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  title,
+                  notifikasi.pesan ?? '',
                   style: blackTextStyle.copyWith(
                     fontSize: 16,
                     fontWeight: semiBold,
                     overflow: TextOverflow.ellipsis,
                   ),
+                  maxLines: 1,
                 ),
                 Text(
-                  tanggal,
+                  notifikasi.createdAt ?? '',
                   style: blackTextStyle.copyWith(
                     fontSize: 14,
                   ),

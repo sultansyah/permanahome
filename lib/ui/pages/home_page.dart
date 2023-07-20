@@ -405,26 +405,26 @@ class _HomePageState extends State<HomePage> {
                   Navigator.pushNamed(context, '/upgrade-paket');
                 },
               ),
-              const SizedBox(
-                width: 14,
-              ),
-              PenawaranItem(
-                title: 'Ayo Upgrade Sekararang Juga Semuanya',
-                gambar: 'assets/img_penawaran1.png',
-                onPressed: () {
-                  Navigator.pushNamed(context, '/upgrade-paket');
-                },
-              ),
-              const SizedBox(
-                width: 14,
-              ),
-              PenawaranItem(
-                title: 'Ayo Upgrade Sekararang Juga Semuanya',
-                gambar: 'assets/img_penawaran1.png',
-                onPressed: () {
-                  Navigator.pushNamed(context, '/upgrade-paket');
-                },
-              ),
+              // const SizedBox(
+              //   width: 14,
+              // ),
+              // PenawaranItem(
+              //   title: 'Ayo Upgrade Sekararang Juga Semuanya',
+              //   gambar: 'assets/img_penawaran1.png',
+              //   onPressed: () {
+              //     Navigator.pushNamed(context, '/upgrade-paket');
+              //   },
+              // ),
+              // const SizedBox(
+              //   width: 14,
+              // ),
+              // PenawaranItem(
+              //   title: 'Ayo Upgrade Sekararang Juga Semuanya',
+              //   gambar: 'assets/img_penawaran1.png',
+              //   onPressed: () {
+              //     Navigator.pushNamed(context, '/upgrade-paket');
+              //   },
+              // ),
             ],
           ),
         ),

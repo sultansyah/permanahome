@@ -1,17 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:permanahome/models/notifikasi_model.dart';
 import 'package:permanahome/shared/theme.dart';
 
 class DetailNotifikasiPage extends StatelessWidget {
-  // final String title;
-  // final String status;
-  // final String tanggalPenyelesain;
-  // final String nama;
-  // final String permanaHomeNumber;
-  // final String deskripsi;
-  // final String tindakanYangDiambil;
+  final Notifikasi notifikasi;
 
   const DetailNotifikasiPage({
     super.key,
+    required this.notifikasi,
   });
 
   @override
@@ -36,31 +32,21 @@ class DetailNotifikasiPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Upgrade Layanan Berhasil',
+                  notifikasi.createdAt ?? '',
                   style: blackTextStyle.copyWith(
-                    fontSize: 16,
+                    fontSize: 12,
+                    fontWeight: medium,
+                  ),
+                ),
+                Text(
+                  notifikasi.pesan ?? '',
+                  style: blackTextStyle.copyWith(
+                    fontSize: 15,
                     fontWeight: semiBold,
                   ),
                 ),
                 const SizedBox(
                   height: 4,
-                ),
-                Text(
-                  '12 Juni 2023',
-                  style: blackTextStyle.copyWith(
-                    fontSize: 14,
-                    fontWeight: medium,
-                  ),
-                ),
-                const SizedBox(
-                  height: 4,
-                ),
-                Text(
-                  'Upgrade Layanan Anda Berhasil Dilakukan, Selamat Menikmati',
-                  style: blackTextStyle.copyWith(
-                    fontSize: 14,
-                    fontWeight: medium,
-                  ),
                 ),
               ],
             ),
