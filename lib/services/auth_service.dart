@@ -92,6 +92,8 @@ class AuthService {
 
       if (res.statusCode == 200) {
         await clearLocalStorage();
+
+        return;
       } else {
         throw jsonDecode(res.body)['message'];
       }

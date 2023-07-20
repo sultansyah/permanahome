@@ -53,7 +53,8 @@ class _PermanaHomeNumberPageState extends State<PermanaHomeNumberPage> {
                     children: state.userPermanaHomeNumbers
                         .map(
                           (userPermanaHomeNumber) => PermanaHomeNumberItem(
-                              permanaHomeNumber: userPermanaHomeNumber),
+                            permanaHomeNumber: userPermanaHomeNumber,
+                          ),
                         )
                         .toList(),
                   ),
@@ -62,7 +63,21 @@ class _PermanaHomeNumberPageState extends State<PermanaHomeNumberPage> {
             );
           }
 
-          return Container();
+          if (state is UserPermanaHomeNumberDataNotExist) {
+            return Center(
+              child: Text(
+                'Kosong',
+                style: blackTextStyle.copyWith(
+                  fontSize: 15,
+                  fontWeight: bold,
+                ),
+              ),
+            );
+          }
+
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
         },
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,

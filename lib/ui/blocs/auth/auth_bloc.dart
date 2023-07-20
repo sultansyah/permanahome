@@ -13,6 +13,17 @@ part 'auth_state.dart';
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc() : super(AuthInitial()) {
     on<AuthEvent>((event, emit) async {
+      if (event is AuthLogout) {
+        try {
+          emit(AuthLoading());
+
+          emit(AuthInitial());
+
+          await AuthService().logout();
+        } catch (e) {
+          emit(AuthFailed(e.toString()));
+        }
+      }
       if (event is AuthCheckEmail) {
         try {
           emit(AuthLoading());
@@ -82,17 +93,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
             emit(AuthSuccess(updatedUser));
           }
-        } catch (e) {
-          emit(AuthFailed(e.toString()));
-        }
-      }
-      if (event is AuthLogout) {
-        try {
-          emit(AuthLoading());
-
-          await AuthService().logout();
-
-          emit(AuthInitial());
         } catch (e) {
           emit(AuthFailed(e.toString()));
         }

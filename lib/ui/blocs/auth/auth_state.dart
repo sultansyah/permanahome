@@ -7,9 +7,15 @@ abstract class AuthState extends Equatable {
   List<Object> get props => [];
 }
 
-class AuthInitial extends AuthState {}
+class AuthInitial extends AuthState {
+  @override
+  List<Object> get props => [identityHashCode(this)];
+}
 
-class AuthLoading extends AuthState {}
+class AuthLoading extends AuthState {
+  @override
+  List<Object> get props => [identityHashCode(this)];
+}
 
 class AuthFailed extends AuthState {
   final String e;
@@ -28,3 +34,5 @@ class AuthSuccess extends AuthState {
   @override
   List<Object> get props => super.props;
 }
+
+class AuthSuccessLogout extends AuthState {}
