@@ -2,10 +2,8 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:permanahome/models/sign_in_form_model.dart';
 import 'package:permanahome/models/sign_up_form_model.dart';
-import 'package:permanahome/models/user_edit_form_model.dart';
 import 'package:permanahome/models/user_model.dart';
 import 'package:permanahome/services/auth_service.dart';
-import 'package:permanahome/services/user_service.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';
@@ -75,25 +73,17 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           emit(AuthFailed(e.toString()));
         }
       }
+
       if (event is AuthUpdateUser) {
         try {
-          if (state is AuthSuccess) {
-            final updatedUser = (state as AuthSuccess).user.copyWith(
-                  username: event.data.username,
-                  password: event.data.password,
-                  fullName: event.data.fullName,
-                  email: event.data.email,
-                  noHp: event.data.noHp,
-                  noWa: event.data.noWa,
-                );
+          emit(AuthLoading());
 
-            emit(AuthLoading());
+          final UserModel user = await AuthService().updateUser(event.user);
 
-            await UserService().updateUser(event.data);
-
-            emit(AuthSuccess(updatedUser));
-          }
+          emit(AuthSuccess(user));
+          emit(AuthUpdateSuccess());
         } catch (e) {
+          emit(AuthFailedUpdate());
           emit(AuthFailed(e.toString()));
         }
       }

@@ -21,6 +21,18 @@ class UserModel {
     this.token,
   });
 
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'full_name': fullName,
+      'email': email,
+      'username': username,
+      'password': password,
+      'no_hp': noHp,
+      'no_wa': noWa,
+    };
+  }
+
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
         id: json['id'],
         fullName: json['full_name'],
@@ -34,20 +46,21 @@ class UserModel {
       );
 
   UserModel copyWith({
+    int? id,
+    String? fullName,
+    String? email,
     String? username,
     String? password,
-    String? email,
-    String? fullName,
     String? noHp,
     String? noWa,
     String? profilePicture,
   }) =>
       UserModel(
-        id: id,
+        id: id ?? this.id,
+        fullName: fullName ?? this.fullName,
+        email: email ?? this.email,
         username: username ?? this.username,
         password: password ?? this.password,
-        email: email ?? this.email,
-        fullName: fullName ?? this.fullName,
         noHp: noHp ?? this.noHp,
         noWa: noWa ?? this.noWa,
         profilePicture: profilePicture,

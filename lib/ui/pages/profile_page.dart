@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:permanahome/shared/shared_values.dart';
 import 'package:permanahome/shared/theme.dart';
 import 'package:permanahome/ui/blocs/auth/auth_bloc.dart';
 import 'package:permanahome/ui/widgets/profile_item.dart';
@@ -57,14 +58,22 @@ class ProfilePage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Muhammad Sultanasyah',
+                        (globalUser != null)
+                            ? (globalUser!.fullName != null)
+                                ? globalUser!.fullName!
+                                : ''
+                            : '',
                         style: blackTextStyle.copyWith(
                           fontSize: 14,
                           fontWeight: semiBold,
                         ),
                       ),
                       Text(
-                        'dsakosadksdak@gmail.com',
+                        (globalUser != null)
+                            ? (globalUser!.email != null)
+                                ? globalUser!.email!
+                                : ''
+                            : '',
                         style: lightGreenTextStyle.copyWith(
                           fontSize: 10,
                         ),

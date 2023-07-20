@@ -20,9 +20,9 @@ class UserFailed extends UserState {
 }
 
 class UserSuccess extends UserState {
-  final List<UserModel> users;
-  const UserSuccess(this.users);
+  final UserModel user;
+  const UserSuccess(this.user);
 
   @override
-  List<Object> get props => [users];
+  List<Object> get props => [user];
 }

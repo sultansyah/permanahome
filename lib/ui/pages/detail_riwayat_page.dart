@@ -1,17 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:permanahome/models/riwayat_model.dart';
 import 'package:permanahome/shared/theme.dart';
 
 class DetailRiwayatPage extends StatelessWidget {
-  // final String title;
-  // final String status;
-  // final String tanggalPenyelesain;
-  // final String nama;
-  // final String permanaHomeNumber;
-  // final String deskripsi;
-  // final String tindakanYangDiambil;
+  final Riwayat riwayat;
 
   const DetailRiwayatPage({
     super.key,
+    required this.riwayat,
   });
 
   @override
@@ -36,9 +32,9 @@ class DetailRiwayatPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Upgrade Layanan',
+                  riwayat.createdAt ?? '-',
                   style: blackTextStyle.copyWith(
-                    fontSize: 16,
+                    fontSize: 12,
                     fontWeight: semiBold,
                   ),
                 ),
@@ -46,7 +42,7 @@ class DetailRiwayatPage extends StatelessWidget {
                   height: 4,
                 ),
                 Text(
-                  'Status: Selesai',
+                  'Status: ${riwayat.status ?? '-'}',
                   style: blackTextStyle.copyWith(
                     fontSize: 14,
                     fontWeight: medium,
@@ -56,17 +52,7 @@ class DetailRiwayatPage extends StatelessWidget {
                   height: 4,
                 ),
                 Text(
-                  'Tanggal Penyelesain: 23 Juni 2023',
-                  style: blackTextStyle.copyWith(
-                    fontSize: 14,
-                    fontWeight: medium,
-                  ),
-                ),
-                const SizedBox(
-                  height: 4,
-                ),
-                Text(
-                  'Alamat: Jalan Jalan Ke Tepi Pantai, Ini Bukan Pantun',
+                  'Tanggal Penyelesaian: ${riwayat.tanggalDiselesaikan ?? "-"}',
                   style: blackTextStyle.copyWith(
                     fontSize: 14,
                     fontWeight: medium,
@@ -77,17 +63,7 @@ class DetailRiwayatPage extends StatelessWidget {
                   height: 4,
                 ),
                 Text(
-                  'Nama: Saya Siap',
-                  style: blackTextStyle.copyWith(
-                    fontSize: 14,
-                    fontWeight: medium,
-                  ),
-                ),
-                const SizedBox(
-                  height: 4,
-                ),
-                Text(
-                  'Permana Home Number: 1221021210',
+                  'Permana Home Number: ${riwayat.permanaHomeNumberId ?? '-'}',
                   style: blackTextStyle.copyWith(
                     fontSize: 14,
                     fontWeight: medium,
@@ -105,9 +81,9 @@ class DetailRiwayatPage extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  'Saya sudah selesai menyelesain upgrade layanan',
+                  riwayat.deskripsi ?? '-',
                   style: blackTextStyle.copyWith(
-                    fontSize: 14,
+                    fontSize: 13,
                     fontWeight: medium,
                   ),
                 ),
@@ -123,9 +99,9 @@ class DetailRiwayatPage extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  'Menupgrade dan blabla blabla blabla blabla blabla blabla blabla blabla blabla blabla blabla',
+                  riwayat.tindakan ?? '-',
                   style: blackTextStyle.copyWith(
-                    fontSize: 14,
+                    fontSize: 13,
                     fontWeight: medium,
                   ),
                 ),

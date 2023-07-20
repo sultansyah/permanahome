@@ -45,6 +45,7 @@ class AuthService {
       if (res.statusCode == 200) {
         UserModel user = UserModel.fromJson(jsonDecode(res.body));
         user = user.copyWith(password: data.password);
+        globalUser = user;
 
         await storeCredentialToLocal(user);
 
@@ -67,6 +68,7 @@ class AuthService {
       if (res.statusCode == 200) {
         UserModel user = UserModel.fromJson(jsonDecode(res.body));
         user = user.copyWith(password: data.password);
+        globalUser = user;
 
         await storeCredentialToLocal(user);
 
@@ -161,5 +163,39 @@ class AuthService {
   Future<void> clearLocalStorage() async {
     const storage = FlutterSecureStorage();
     await storage.deleteAll();
+  }
+
+  Future<UserModel> updateUser(UserModel data) async {
+    try {
+      final token = await AuthService().getToken();
+
+      final res = await http.put(
+        Uri.parse('$baseUrl/users'),
+        body: {
+          "id": data.id.toString(),
+          "full_name": data.fullName,
+          "email": data.email,
+          "username": data.username,
+          "password": data.password,
+          "noHp": data.noHp,
+          "noWa": data.noWa,
+        },
+        headers: {
+          'Authorization': token,
+        },
+      );
+
+      if (res.statusCode == 200) {
+        UserModel user = UserModel.fromJson(jsonDecode(res.body));
+        user = user.copyWith(password: data.password);
+        storeCredentialToLocal(user);
+        globalUser = user;
+        return user;
+      }
+
+      throw jsonDecode(res.body)['message'];
+    } catch (e) {
+      rethrow;
+    }
   }
 }

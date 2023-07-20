@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:permanahome/shared/shared_values.dart';
 import 'package:permanahome/shared/theme.dart';
 import 'package:permanahome/ui/blocs/auth/auth_bloc.dart';
 
@@ -11,6 +12,7 @@ class SplashPage extends StatelessWidget {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
         if (state is AuthSuccess) {
+          globalUser = state.user;
           Navigator.pushNamedAndRemoveUntil(
             context,
             '/home',

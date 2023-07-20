@@ -9,12 +9,12 @@ abstract class AuthState extends Equatable {
 
 class AuthInitial extends AuthState {
   @override
-  List<Object> get props => [identityHashCode(this)];
+  List<Object> get props => super.props;
 }
 
 class AuthLoading extends AuthState {
   @override
-  List<Object> get props => [identityHashCode(this)];
+  List<Object> get props => super.props;
 }
 
 class AuthFailed extends AuthState {
@@ -35,4 +35,8 @@ class AuthSuccess extends AuthState {
   List<Object> get props => super.props;
 }
 
+class AuthUpdateSuccess extends AuthState {}
+
 class AuthSuccessLogout extends AuthState {}
+
+class AuthFailedUpdate extends AuthState {}

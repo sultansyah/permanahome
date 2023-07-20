@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:permanahome/shared/shared_values.dart';
+import 'package:permanahome/shared/shareds_method.dart';
 import 'package:permanahome/shared/theme.dart';
+import 'package:permanahome/ui/blocs/riwayat/riwayat_bloc.dart';
 import 'package:permanahome/ui/widgets/riwayat_item.dart';
 
 class RiwayatPage extends StatelessWidget {
@@ -12,45 +16,54 @@ class RiwayatPage extends StatelessWidget {
         title: const Text('Riwayat'),
         automaticallyImplyLeading: false,
       ),
-      body: ListView(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 24,
+      body: BlocProvider<RiwayatBloc>(
+        create: (context) =>
+            RiwayatBloc()..add(RiwayatEventGet(globalPermanaHomeNumberId ?? 0)),
+        child: BlocConsumer<RiwayatBloc, RiwayatState>(
+          listener: (context, state) {
+            if (state is RiwayatFailed) {
+              showCustomSnackbar(context, state.e);
+            }
+          },
+          builder: (context, state) {
+            if (state is RiwayatSuccess) {
+              return ListView(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 24,
+                ),
+                children: [
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 18,
+                      vertical: 18,
+                    ),
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: whiteColor,
+                    ),
+                    child: Column(
+                      children: state.riwayat.map((e) {
+                        return Column(
+                          children: [
+                            RiwayatItem(riwayat: e),
+                            const SizedBox(
+                              height: 10,
+                            ),
+                            const Divider(),
+                          ],
+                        );
+                      }).toList(),
+                    ),
+                  ),
+                ],
+              );
+            }
+            return const Center(
+              child: CircularProgressIndicator(),
+            );
+          },
         ),
-        children: [
-          Container(
-            padding: const EdgeInsets.symmetric(
-              horizontal: 18,
-              vertical: 18,
-            ),
-            width: double.infinity,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              color: whiteColor,
-            ),
-            child: Column(
-              children: [
-                RiwayatItem(
-                  title: 'Upgrade Layanan',
-                  tanggal: '21 Juni 2023',
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/detail-riwayat');
-                  },
-                ),
-                const SizedBox(
-                  height: 18,
-                ),
-                const Divider(),
-                RiwayatItem(
-                  title: 'Upgrade Layanan',
-                  tanggal: '21 Juni 2023',
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/detail-riwayat');
-                  },
-                ),
-              ],
-            ),
-          ),
-        ],
       ),
     );
   }

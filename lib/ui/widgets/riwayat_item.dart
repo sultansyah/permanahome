@@ -1,22 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:permanahome/models/riwayat_model.dart';
 import 'package:permanahome/shared/theme.dart';
+import 'package:permanahome/ui/pages/detail_riwayat_page.dart';
 
 class RiwayatItem extends StatelessWidget {
-  final String title;
-  final String tanggal;
-  final VoidCallback? onPressed;
+  final Riwayat riwayat;
 
   const RiwayatItem({
     super.key,
-    required this.title,
-    required this.tanggal,
-    this.onPressed,
+    required this.riwayat,
   });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onPressed,
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => DetailRiwayatPage(riwayat: riwayat),
+          ),
+        );
+      },
       child: Row(
         children: [
           Icon(
@@ -32,15 +37,16 @@ class RiwayatItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  title,
+                  riwayat.deskripsi ?? '',
                   style: blackTextStyle.copyWith(
                     fontSize: 16,
                     fontWeight: semiBold,
                     overflow: TextOverflow.ellipsis,
                   ),
+                  maxLines: 1,
                 ),
                 Text(
-                  tanggal,
+                  riwayat.createdAt ?? '',
                   style: blackTextStyle.copyWith(
                     fontSize: 14,
                   ),

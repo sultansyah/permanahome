@@ -6,3 +6,11 @@ abstract class UserEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
+
+class UserEventUpdate extends UserEvent {
+  final UserModel user;
+  const UserEventUpdate(this.user);
+
+  @override
+  List<Object> get props => [user];
+}

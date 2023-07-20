@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:permanahome/models/user_permana_home_number_model.dart';
+import 'package:permanahome/shared/shared_values.dart';
 import 'package:permanahome/shared/theme.dart';
 import 'package:permanahome/ui/blocs/auth/auth_bloc.dart';
 import 'package:permanahome/ui/blocs/berita/berita_bloc.dart';
@@ -41,6 +42,9 @@ class _HomePageState extends State<HomePage> {
                   builder: (context, state) {
                     if (state is UserPermanaHomeNumberSuccess &&
                         state is! UserPermanaHomeNumberDataNotExist) {
+                      globalPermanaHomeNumberId = state.userPermanaHomeNumbers
+                          .firstWhere((element) => element.isActive == 1)
+                          .permanaHomeNumberId;
                       return Column(
                         children: [
                           buildProfile(context),
