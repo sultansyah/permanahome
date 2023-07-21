@@ -15,12 +15,12 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
-  final fullNameController = TextEditingController(text: 'fathanfathan');
-  final emailController = TextEditingController(text: 'fathanfathan@gmail.com');
-  final usernameController = TextEditingController(text: 'fathanfathan');
-  final passwordController = TextEditingController(text: 'fathanfathan');
-  final noHpController = TextEditingController(text: '2102190219021');
-  final noWaController = TextEditingController(text: '2102190219021');
+  final fullNameController = TextEditingController(text: 'sultansultan');
+  final emailController = TextEditingController(text: 'sultansultan@gmail.com');
+  final usernameController = TextEditingController(text: 'sultansultan');
+  final passwordController = TextEditingController(text: 'sultansultan');
+  final noHpController = TextEditingController(text: '1282182182');
+  final noWaController = TextEditingController(text: '1282182182');
 
   bool validate() {
     if (fullNameController.text.isEmpty ||
