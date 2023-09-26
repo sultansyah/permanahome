@@ -115,17 +115,19 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                                   child: CustomFilledButton(
                                     title: 'Daftar',
                                     onPressed: () {
-                                      Navigator.pushNamedAndRemoveUntil(
-                                        context,
-                                        '/sign-up',
-                                        (route) => false,
-                                      );
+                                      Navigator.pushNamed(context, '/sign-up');
+                                      // Navigator.pushNamedAndRemoveUntil(
+                                      //   context,
+                                      //   '/sign-up',
+                                      //   (route) => false,
+                                      // );
                                     },
                                   ),
                                 ),
                                 CustomTextButton(
                                   title: 'Masuk',
                                   onPressed: () {
+                                    Navigator.pushNamed(context, '/sign-in');
                                     Navigator.pushNamedAndRemoveUntil(
                                       context,
                                       '/sign-in',

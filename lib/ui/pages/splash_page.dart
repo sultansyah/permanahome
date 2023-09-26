@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:permanahome/shared/shared_values.dart';
@@ -11,22 +13,24 @@ class SplashPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
-        if (state is AuthSuccess) {
-          globalUser = state.user;
-          Navigator.pushNamedAndRemoveUntil(
-            context,
-            '/home',
-            (route) => false,
-          );
-        }
+        Timer(const Duration(seconds: 2), () {
+          if (state is AuthSuccess) {
+            globalUser = state.user;
+            Navigator.pushNamedAndRemoveUntil(
+              context,
+              '/home',
+              (route) => false,
+            );
+          }
 
-        if (state is AuthFailed) {
-          Navigator.pushNamedAndRemoveUntil(
-            context,
-            '/onboarding',
-            (route) => false,
-          );
-        }
+          if (state is AuthFailed) {
+            Navigator.pushNamedAndRemoveUntil(
+              context,
+              '/onboarding',
+              (route) => false,
+            );
+          }
+        });
       },
       child: Scaffold(
         backgroundColor: whiteColor,
