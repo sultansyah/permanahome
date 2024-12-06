@@ -1,4 +1,5 @@
 # permanahome
+Proyek ini dikerjakan untuk memenuhi syarat lulus magang
 
 A new Flutter project.
 
